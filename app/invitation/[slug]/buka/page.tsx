@@ -152,27 +152,26 @@ export default async function Page({ params }: PageProps) {
             </div>
           </ScrollAnimate>
 
-          <div className="grid md:grid-cols-2 gap-16 md:gap-10">
+          <div className="grid md:grid-cols-2 gap-12 max-w-3xl mx-auto">
             {/* Mempelai Pria */}
             <ScrollAnimate type="fade-right" delay={0.1} className="w-full">
-              <div className="flex flex-col items-center text-center space-y-6 group">
-                <div className="relative w-48 h-48 rounded-full overflow-hidden border-4 border-gold-accent shadow-xl transition-transform duration-500 group-hover:scale-105">
-                  <Image
-                    src="/gallery/groom_v2.jpg"
-                    alt="Dani Ramdani"
-                    fill
-                    sizes="192px"
-                    className="object-cover object-top"
-                  />
+              <div className="bg-white/65 backdrop-blur-xs rounded-2xl p-8 border border-gold-accent/15 shadow-xs flex flex-col items-center text-center space-y-6 group hover:border-gold-accent/35 hover:bg-white/80 transition-all duration-500 hover:shadow-md">
+                {/* Monogram Badge */}
+                <div className="relative w-32 h-32 rounded-full flex items-center justify-center bg-white border border-gold-accent/30 shadow-xs transition-all duration-500 group-hover:scale-105 group-hover:border-gold-accent">
+                  <div className="absolute inset-1.5 rounded-full border border-dashed border-gold-accent/25" />
+                  <span className="font-serif text-4xl font-light text-gradient-gold select-none leading-none pt-1">
+                    D
+                  </span>
                 </div>
-                <div className="space-y-2">
+                
+                <div className="space-y-3">
                   <h3 className="font-serif text-2xl font-bold text-navy-blue">Dani Ramdani</h3>
                   <p className="text-xs uppercase tracking-widest text-gold-accent font-bold">Dani</p>
-                  <div className="w-8 h-[1px] bg-slate-300 mx-auto my-3" />
-                  <p className="text-sm text-slate-600">
+                  <div className="w-12 h-[1px] bg-gold-accent/30 mx-auto my-3" />
+                  <p className="text-xs text-slate-500 uppercase tracking-wider">
                     Putra kedua dari
                   </p>
-                  <p className="text-sm font-semibold text-slate-800">
+                  <p className="text-sm font-semibold text-slate-700">
                     Bapa Eman & Ibu Elis
                   </p>
                 </div>
@@ -181,24 +180,23 @@ export default async function Page({ params }: PageProps) {
 
             {/* Mempelai Wanita */}
             <ScrollAnimate type="fade-left" delay={0.2} className="w-full">
-              <div className="flex flex-col items-center text-center space-y-6 group">
-                <div className="relative w-48 h-48 rounded-full overflow-hidden border-4 border-gold-accent shadow-xl transition-transform duration-500 group-hover:scale-105">
-                  <Image
-                    src="/gallery/bride_v3.jpg"
-                    alt="Rika Rahmawati"
-                    fill
-                    sizes="192px"
-                    className="object-cover"
-                  />
+              <div className="bg-white/65 backdrop-blur-xs rounded-2xl p-8 border border-gold-accent/15 shadow-xs flex flex-col items-center text-center space-y-6 group hover:border-gold-accent/35 hover:bg-white/80 transition-all duration-500 hover:shadow-md">
+                {/* Monogram Badge */}
+                <div className="relative w-32 h-32 rounded-full flex items-center justify-center bg-white border border-gold-accent/30 shadow-xs transition-all duration-500 group-hover:scale-105 group-hover:border-gold-accent">
+                  <div className="absolute inset-1.5 rounded-full border border-dashed border-gold-accent/25" />
+                  <span className="font-serif text-4xl font-light text-gradient-gold select-none leading-none pt-1">
+                    R
+                  </span>
                 </div>
-                <div className="space-y-2">
+
+                <div className="space-y-3">
                   <h3 className="font-serif text-2xl font-bold text-navy-blue">Rika Rahmawati</h3>
                   <p className="text-xs uppercase tracking-widest text-gold-accent font-bold">Rika</p>
-                  <div className="w-8 h-[1px] bg-slate-300 mx-auto my-3" />
-                  <p className="text-sm text-slate-600">
+                  <div className="w-12 h-[1px] bg-gold-accent/30 mx-auto my-3" />
+                  <p className="text-xs text-slate-500 uppercase tracking-wider">
                     Putri pertama dari
                   </p>
-                  <p className="text-sm font-semibold text-slate-800">
+                  <p className="text-sm font-semibold text-slate-700">
                     Bapak Uki & Ibu Siti Aisah
                   </p>
                 </div>
