@@ -156,7 +156,7 @@ export default async function Page({ params }: PageProps) {
                   alt="Dani Ramdani"
                   fill
                   sizes="192px"
-                  className="object-cover"
+                  className="object-cover object-top"
                 />
               </div>
               <div className="space-y-2">
