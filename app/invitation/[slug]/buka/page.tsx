@@ -3,6 +3,7 @@ import Image from 'next/image';
 import { supabase } from '@/lib/supabase/client';
 import { decodeSlug } from '@/lib/utils';
 import AudioPlayer from '@/components/audio-player';
+import BottomNavigation from '@/components/bottom-navigation';
 import Countdown from '@/components/countdown';
 import Gallery from '@/components/gallery';
 import Guestbook from '@/components/guestbook';
@@ -43,12 +44,16 @@ export default async function Page({ params }: PageProps) {
   }
 
   return (
-    <main className="relative bg-slate-50 min-h-screen text-slate-800 selection:bg-gold-accent/30">
+    <main className="relative bg-slate-50 min-h-screen text-slate-800 selection:bg-gold-accent/30 pb-20 md:pb-0">
       {/* Floating Audio Player */}
       <AudioPlayer />
 
+      {/* Floating Bottom Navigation for Mobile */}
+      <BottomNavigation />
+
       {/* 1. HERO BANNER */}
       <section 
+        id="hero"
         className="relative h-screen flex flex-col items-center justify-center text-center px-4 overflow-hidden"
         style={{
           backgroundImage: `linear-gradient(to bottom, rgba(10, 19, 36, 0.6), rgba(10, 19, 36, 0.85)), url('/gallery/gallery1.jpg')`,
@@ -122,7 +127,7 @@ export default async function Page({ params }: PageProps) {
       </div>
 
       {/* 3. MEMPELAI (BRIDE & GROOM) */}
-      <section className="py-24 px-6 bg-slate-50 bg-wedding-pattern bg-blend-overlay bg-slate-50/95 relative overflow-hidden">
+      <section id="mempelai" className="py-24 px-6 bg-slate-50 bg-wedding-pattern bg-blend-overlay bg-slate-50/95 relative overflow-hidden">
         {/* Corner Ornaments */}
         <div className="absolute inset-0 pointer-events-none z-0 mix-blend-multiply opacity-25 select-none">
           <Image src="/decor/corner.png" alt="Corner Ornament" fill className="object-cover" />
@@ -195,7 +200,7 @@ export default async function Page({ params }: PageProps) {
       </section>
 
       {/* 4. ACARA (EVENT DETAILS) */}
-      <section className="py-24 px-6 bg-navy-dark text-white relative">
+      <section id="acara" className="py-24 px-6 bg-navy-dark text-white relative">
         <div className="absolute inset-0 bg-cover bg-center opacity-5 pointer-events-none" style={{ backgroundImage: `url('/gallery/gallery2.jpg')` }} />
         
         <div className="max-w-4xl mx-auto space-y-16 relative z-10">
@@ -308,7 +313,7 @@ export default async function Page({ params }: PageProps) {
       </div>
 
       {/* 5. GALERI FOTO */}
-      <section className="py-24 px-6 bg-white bg-wedding-pattern bg-blend-overlay bg-white/95 relative overflow-hidden">
+      <section id="galeri" className="py-24 px-6 bg-white bg-wedding-pattern bg-blend-overlay bg-white/95 relative overflow-hidden">
         {/* Corner Ornaments */}
         <div className="absolute inset-0 pointer-events-none z-0 mix-blend-multiply opacity-25 select-none">
           <Image src="/decor/corner.png" alt="Corner Ornament" fill className="object-cover" />
@@ -334,7 +339,7 @@ export default async function Page({ params }: PageProps) {
       </div>
 
       {/* 6. AMPLOP DIGITAL (DIGITAL GIFT) */}
-      <section className="py-24 px-6 bg-slate-50 bg-wedding-pattern bg-blend-overlay bg-slate-50/95 relative overflow-hidden">
+      <section id="amplop" className="py-24 px-6 bg-slate-50 bg-wedding-pattern bg-blend-overlay bg-slate-50/95 relative overflow-hidden">
         {/* Corner Ornaments */}
         <div className="absolute inset-0 pointer-events-none z-0 mix-blend-multiply opacity-25 select-none">
           <Image src="/decor/corner.png" alt="Corner Ornament" fill className="object-cover" />
@@ -386,7 +391,7 @@ export default async function Page({ params }: PageProps) {
       </div>
 
       {/* 7. UCAPAN & RSVP */}
-      <section className="py-24 px-6 bg-white bg-wedding-pattern bg-blend-overlay bg-white/95 border-t border-slate-100">
+      <section id="ucapan" className="py-24 px-6 bg-white bg-wedding-pattern bg-blend-overlay bg-white/95 border-t border-slate-100">
         <Guestbook initialGuestName={guestName} />
       </section>
 
