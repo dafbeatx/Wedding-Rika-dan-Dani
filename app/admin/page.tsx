@@ -464,100 +464,182 @@ export default function AdminPage() {
                   Belum ada tamu terdaftar. Silakan tambah tamu di form sebelah kiri.
                 </div>
               ) : (
-                <div className="overflow-x-auto">
-                  <table className="w-full text-left border-collapse text-xs">
-                    <thead>
-                      <tr className="bg-slate-50 text-slate-500 uppercase tracking-wider border-b border-slate-100 font-semibold text-[10px]">
-                        <th className="py-3 px-4">Nama Tamu</th>
-                        <th className="py-3 px-4">Kategori</th>
-                        <th className="py-3 px-4">Slug</th>
-                        <th className="py-3 px-4 text-right">Aksi</th>
-                      </tr>
-                    </thead>
-                    <tbody className="divide-y divide-slate-100">
-                      {filteredGuests.map((guest) => {
-                        const guestLink = `${origin}/invitation/${guest.slug}`;
-                        return (
-                          <tr key={guest.id} className="hover:bg-slate-50/70 transition-colors">
-                            <td className="py-3.5 px-4 font-bold text-navy-blue">
-                              <div className="flex items-center gap-1.5">
-                                <span>{guest.nama}</span>
-                                <a 
-                                  href={`/invitation/${guest.slug}`} 
-                                  target="_blank" 
-                                  rel="noopener noreferrer"
-                                  className="text-slate-400 hover:text-gold-accent"
-                                  title="Pratinjau Layer 1"
+                <>
+                  {/* Desktop Table View */}
+                  <div className="hidden md:block overflow-x-auto">
+                    <table className="w-full text-left border-collapse text-xs">
+                      <thead>
+                        <tr className="bg-slate-50 text-slate-500 uppercase tracking-wider border-b border-slate-100 font-semibold text-[10px]">
+                          <th className="py-3 px-4">Nama Tamu</th>
+                          <th className="py-3 px-4">Kategori</th>
+                          <th className="py-3 px-4">Slug</th>
+                          <th className="py-3 px-4 text-right">Aksi</th>
+                        </tr>
+                      </thead>
+                      <tbody className="divide-y divide-slate-100">
+                        {filteredGuests.map((guest) => {
+                          const guestLink = `${origin}/invitation/${guest.slug}`;
+                          return (
+                            <tr key={guest.id} className="hover:bg-slate-50/70 transition-colors">
+                              <td className="py-3.5 px-4 font-bold text-navy-blue">
+                                <div className="flex items-center gap-1.5">
+                                  <span>{guest.nama}</span>
+                                  <a 
+                                    href={`/invitation/${guest.slug}`} 
+                                    target="_blank" 
+                                    rel="noopener noreferrer"
+                                    className="text-slate-400 hover:text-gold-accent"
+                                    title="Pratinjau Layer 1"
+                                  >
+                                    <ExternalLink className="w-3 h-3" />
+                                  </a>
+                                </div>
+                              </td>
+                              <td className="py-3.5 px-4">
+                                <span className={`px-2 py-0.5 rounded-full text-[9px] font-bold ${
+                                  guest.kategori === 'VIP' 
+                                    ? 'bg-purple-50 text-purple-700 border border-purple-100'
+                                    : guest.kategori === 'Keluarga'
+                                    ? 'bg-blue-50 text-blue-700 border border-blue-100'
+                                    : guest.kategori === 'Teman'
+                                    ? 'bg-emerald-50 text-emerald-700 border border-emerald-100'
+                                    : 'bg-slate-100 text-slate-600'
+                                }`}>
+                                  {guest.kategori}
+                                </span>
+                              </td>
+                              <td className="py-3.5 px-4 font-mono text-slate-400 text-[10px]">
+                                {guest.slug}
+                              </td>
+                              <td className="py-3.5 px-4 text-right space-x-1 whitespace-nowrap">
+                                {/* Copy Button */}
+                                <button
+                                  onClick={() => handleCopyLink(guest)}
+                                  className={`inline-flex items-center gap-1 px-2.5 py-1 rounded border transition-all cursor-pointer ${
+                                    copiedId === guest.id
+                                      ? 'bg-emerald-50 text-emerald-700 border-emerald-300'
+                                      : 'bg-white hover:bg-slate-50 text-slate-600 border-slate-200'
+                                  }`}
+                                  title="Salin Link Undangan"
                                 >
-                                  <ExternalLink className="w-3 h-3" />
-                                </a>
-                              </div>
-                            </td>
-                            <td className="py-3.5 px-4">
-                              <span className={`px-2 py-0.5 rounded-full text-[9px] font-bold ${
-                                guest.kategori === 'VIP' 
-                                  ? 'bg-purple-50 text-purple-700 border border-purple-100'
-                                  : guest.kategori === 'Keluarga'
-                                  ? 'bg-blue-50 text-blue-700 border border-blue-100'
-                                  : guest.kategori === 'Teman'
-                                  ? 'bg-emerald-50 text-emerald-700 border border-emerald-100'
-                                  : 'bg-slate-100 text-slate-600'
-                              }`}>
-                                {guest.kategori}
-                              </span>
-                            </td>
-                            <td className="py-3.5 px-4 font-mono text-slate-400 text-[10px]">
-                              {guest.slug}
-                            </td>
-                            <td className="py-3.5 px-4 text-right space-x-1 whitespace-nowrap">
-                              {/* Copy Button */}
-                              <button
-                                onClick={() => handleCopyLink(guest)}
-                                className={`inline-flex items-center gap-1 px-2.5 py-1 rounded border transition-all cursor-pointer ${
-                                  copiedId === guest.id
-                                    ? 'bg-emerald-50 text-emerald-700 border-emerald-300'
-                                    : 'bg-white hover:bg-slate-50 text-slate-600 border-slate-200'
-                                }`}
-                                title="Salin Link Undangan"
-                              >
-                                {copiedId === guest.id ? (
-                                  <>
-                                    <Check className="w-3 h-3" />
-                                    <span>Tersalin</span>
-                                  </>
-                                ) : (
-                                  <>
-                                    <Copy className="w-3 h-3" />
-                                    <span>Salin</span>
-                                  </>
-                                )}
-                              </button>
+                                  {copiedId === guest.id ? (
+                                    <>
+                                      <Check className="w-3 h-3" />
+                                      <span>Tersalin</span>
+                                    </>
+                                  ) : (
+                                    <>
+                                      <Copy className="w-3 h-3" />
+                                      <span>Salin</span>
+                                    </>
+                                  )}
+                                </button>
 
-                              {/* WhatsApp Share Button */}
-                              <button
-                                onClick={() => handleSendWA(guest)}
-                                className="inline-flex items-center gap-1 px-2.5 py-1 bg-emerald-500 hover:bg-emerald-600 text-white rounded border border-emerald-500 transition-all cursor-pointer"
-                                title="Kirim via WhatsApp"
-                              >
-                                <Share2 className="w-3 h-3" />
-                                <span>Kirim WA</span>
-                              </button>
+                                {/* WhatsApp Share Button */}
+                                <button
+                                  onClick={() => handleSendWA(guest)}
+                                  className="inline-flex items-center gap-1 px-2.5 py-1 bg-emerald-500 hover:bg-emerald-600 text-white rounded border border-emerald-500 transition-all cursor-pointer"
+                                  title="Kirim via WhatsApp"
+                                >
+                                  <Share2 className="w-3 h-3" />
+                                  <span>Kirim WA</span>
+                                </button>
 
-                              {/* Delete Button */}
-                              <button
-                                onClick={() => handleDelete(guest.id, guest.slug)}
-                                className="inline-flex items-center justify-center p-1 text-slate-400 hover:text-rose-600 hover:bg-rose-50 rounded transition-all cursor-pointer"
-                                title="Hapus Tamu"
+                                {/* Delete Button */}
+                                <button
+                                  onClick={() => handleDelete(guest.id, guest.slug)}
+                                  className="inline-flex items-center justify-center p-1 text-slate-400 hover:text-rose-600 hover:bg-rose-50 rounded transition-all cursor-pointer"
+                                  title="Hapus Tamu"
+                                >
+                                  <Trash2 className="w-3.5 h-3.5" />
+                                </button>
+                              </td>
+                            </tr>
+                          );
+                        })}
+                      </tbody>
+                    </table>
+                  </div>
+
+                  {/* Mobile Card View */}
+                  <div className="md:hidden p-4 space-y-3 divide-y divide-slate-100 max-h-[60vh] overflow-y-auto">
+                    {filteredGuests.map((guest, idx) => (
+                      <div key={guest.id} className={`pt-3 space-y-2.5 ${idx === 0 ? '!pt-0' : ''}`}>
+                        <div className="flex items-start justify-between gap-2">
+                          <div className="space-y-0.5">
+                            <div className="font-bold text-navy-blue flex items-center gap-1.5 text-sm">
+                              <span>{guest.nama}</span>
+                              <a 
+                                href={`/invitation/${guest.slug}`} 
+                                target="_blank" 
+                                rel="noopener noreferrer"
+                                className="text-slate-400 hover:text-gold-accent"
+                                title="Pratinjau Layer 1"
                               >
-                                <Trash2 className="w-3.5 h-3.5" />
-                              </button>
-                            </td>
-                          </tr>
-                        );
-                      })}
-                    </tbody>
-                  </table>
-                </div>
+                                <ExternalLink className="w-3.5 h-3.5" />
+                              </a>
+                            </div>
+                            <div className="text-[10px] font-mono text-slate-400">{guest.slug}</div>
+                          </div>
+                          <span className={`px-2 py-0.5 rounded-full text-[9px] font-bold shrink-0 ${
+                            guest.kategori === 'VIP' 
+                              ? 'bg-purple-50 text-purple-700 border border-purple-100'
+                              : guest.kategori === 'Keluarga'
+                              ? 'bg-blue-50 text-blue-700 border border-blue-100'
+                              : guest.kategori === 'Teman'
+                              ? 'bg-emerald-50 text-emerald-700 border border-emerald-100'
+                              : 'bg-slate-100 text-slate-600'
+                          }`}>
+                            {guest.kategori}
+                          </span>
+                        </div>
+                        
+                        <div className="flex items-center justify-between gap-2 pt-0.5">
+                          <div className="flex items-center gap-2 w-full">
+                            {/* Copy Button */}
+                            <button
+                              onClick={() => handleCopyLink(guest)}
+                              className={`flex-1 flex items-center justify-center gap-1.5 py-1.5 rounded border text-[10px] font-semibold transition-all cursor-pointer ${
+                                copiedId === guest.id
+                                  ? 'bg-emerald-50 text-emerald-700 border-emerald-300'
+                                  : 'bg-white hover:bg-slate-50 text-slate-600 border-slate-200'
+                              }`}
+                            >
+                              {copiedId === guest.id ? (
+                                <>
+                                  <Check className="w-3 h-3" />
+                                  <span>Tersalin</span>
+                                </>
+                              ) : (
+                                <>
+                                  <Copy className="w-3 h-3" />
+                                  <span>Salin Link</span>
+                                </>
+                              )}
+                            </button>
+
+                            {/* WhatsApp Share Button */}
+                            <button
+                              onClick={() => handleSendWA(guest)}
+                              className="flex-1 flex items-center justify-center gap-1.5 py-1.5 bg-emerald-500 hover:bg-emerald-600 text-white rounded border border-emerald-500 text-[10px] font-semibold transition-all cursor-pointer"
+                            >
+                              <Share2 className="w-3 h-3" />
+                              <span>Kirim WA</span>
+                            </button>
+
+                            {/* Delete Button */}
+                            <button
+                              onClick={() => handleDelete(guest.id, guest.slug)}
+                              className="p-1.5 text-slate-400 hover:text-rose-600 hover:bg-rose-50 rounded border border-slate-200 transition-all cursor-pointer shrink-0"
+                            >
+                              <Trash2 className="w-3.5 h-3.5" />
+                            </button>
+                          </div>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </>
               )}
             </div>
           </div>
