@@ -188,18 +188,7 @@ export default function Guestbook({ initialGuestName = '' }: GuestbookProps) {
   return (
     <div className="w-full max-w-2xl mx-auto space-y-12">
       {/* 1. Form Section */}
-      <div className="glass-white p-6 md:p-8 rounded-2xl border border-gold-accent/20 shadow-xl space-y-6 relative overflow-hidden">
-        {/* Frame ornament overlay */}
-        <div className="absolute inset-2.5 pointer-events-none z-0 mix-blend-multiply opacity-80">
-          <Image
-            src="/decor/frame.png"
-            alt="Frame Border"
-            fill
-            className="object-fill rounded-xl"
-            priority
-          />
-        </div>
-
+      <div className="glass-white p-6 md:p-8 rounded-2xl border border-gold-accent/20 shadow-xl space-y-6">
         <div className="text-center space-y-2 relative z-10">
           <h3 className="font-serif text-2xl font-semibold text-navy-blue">Kirim Doa & RSVP</h3>
           <div className="relative w-36 h-5 mx-auto mix-blend-multiply opacity-90">
