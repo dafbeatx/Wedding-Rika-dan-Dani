@@ -57,7 +57,7 @@ export default function InvitationCover({ guestName, slug }: InvitationCoverProp
         isOpening ? 'opacity-0 scale-105 pointer-events-none' : 'opacity-100 scale-100'
       }`}
       style={{
-        backgroundImage: `linear-gradient(to bottom, rgba(10, 19, 36, 0.8), rgba(10, 19, 36, 0.95)), url('https://images.unsplash.com/photo-1519741497674-611481863552?q=80&w=1200')`,
+        backgroundImage: `linear-gradient(to bottom, rgba(10, 19, 36, 0.8), rgba(10, 19, 36, 0.95)), url('/gallery/gallery1.jpg')`,
         backgroundSize: 'cover',
         backgroundPosition: 'center',
       }}

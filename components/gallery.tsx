@@ -6,27 +6,27 @@ import { X, ChevronLeft, ChevronRight } from 'lucide-react';
 
 const IMAGES = [
   {
-    src: 'https://images.unsplash.com/photo-1511285560929-80b456fea0bc?q=80&w=600',
+    src: '/gallery/gallery1.jpg',
     alt: 'Dani & Rika Prewedding 1',
   },
   {
-    src: 'https://images.unsplash.com/photo-1583939003579-730e3918a45a?q=80&w=600',
+    src: '/gallery/gallery2.jpg',
     alt: 'Dani & Rika Prewedding 2',
   },
   {
-    src: 'https://images.unsplash.com/photo-1519225495810-7512c696505a?q=80&w=600',
+    src: '/gallery/gallery3.jpg',
     alt: 'Dani & Rika Prewedding 3',
   },
   {
-    src: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?q=80&w=600',
+    src: '/gallery/gallery4.jpg',
     alt: 'Dani & Rika Prewedding 4',
   },
   {
-    src: 'https://images.unsplash.com/photo-1522673607200-164d1b6ce486?q=80&w=600',
+    src: '/gallery/gallery5.jpg',
     alt: 'Dani & Rika Prewedding 5',
   },
   {
-    src: 'https://images.unsplash.com/photo-1532712938310-34cb3982ef74?q=80&w=600',
+    src: '/gallery/gallery6.jpg',
     alt: 'Dani & Rika Prewedding 6',
   },
 ];

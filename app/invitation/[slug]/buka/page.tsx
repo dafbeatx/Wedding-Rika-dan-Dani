@@ -51,7 +51,7 @@ export default async function Page({ params }: PageProps) {
       <section 
         className="relative h-screen flex flex-col items-center justify-center text-center px-4 overflow-hidden"
         style={{
-          backgroundImage: `linear-gradient(to bottom, rgba(10, 19, 36, 0.6), rgba(10, 19, 36, 0.85)), url('https://images.unsplash.com/photo-1519741497674-611481863552?q=80&w=1200')`,
+          backgroundImage: `linear-gradient(to bottom, rgba(10, 19, 36, 0.6), rgba(10, 19, 36, 0.85)), url('/gallery/gallery1.jpg')`,
           backgroundSize: 'cover',
           backgroundPosition: 'center',
           backgroundAttachment: 'fixed',
@@ -127,7 +127,7 @@ export default async function Page({ params }: PageProps) {
             <div className="flex flex-col items-center text-center space-y-6 group">
               <div className="relative w-48 h-48 rounded-full overflow-hidden border-4 border-gold-accent shadow-xl transition-transform duration-500 group-hover:scale-105">
                 <Image
-                  src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=300"
+                  src="/gallery/groom.jpg"
                   alt="Dani Ramdani"
                   fill
                   sizes="192px"
@@ -151,7 +151,7 @@ export default async function Page({ params }: PageProps) {
             <div className="flex flex-col items-center text-center space-y-6 group">
               <div className="relative w-48 h-48 rounded-full overflow-hidden border-4 border-gold-accent shadow-xl transition-transform duration-500 group-hover:scale-105">
                 <Image
-                  src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?q=80&w=300"
+                  src="/gallery/bride.jpg"
                   alt="Rika Rahmawati"
                   fill
                   sizes="192px"
@@ -176,7 +176,7 @@ export default async function Page({ params }: PageProps) {
 
       {/* 4. ACARA (EVENT DETAILS) */}
       <section className="py-24 px-6 bg-navy-dark text-white relative">
-        <div className="absolute inset-0 bg-cover bg-center opacity-5 pointer-events-none" style={{ backgroundImage: `url('https://images.unsplash.com/photo-1519741497674-611481863552?q=80&w=1200')` }} />
+        <div className="absolute inset-0 bg-cover bg-center opacity-5 pointer-events-none" style={{ backgroundImage: `url('/gallery/gallery2.jpg')` }} />
         
         <div className="max-w-4xl mx-auto space-y-16 relative z-10">
           <div className="text-center space-y-3">
