@@ -105,7 +105,7 @@ export default function InvitationCover({ guestName, slug }: InvitationCoverProp
       }}
     >
       {/* Preload background music to eliminate delay when opening the invitation */}
-      <audio src="/marry-your-daughter_v2.mp3" preload="auto" className="hidden" />
+      <audio src="/marry-your-daughter_v3.mp3" preload="auto" className="hidden" />
       {/* Animated Glowing Gold Border and Accent Elements */}
       <div className="absolute inset-4 border border-gold-accent/20 pointer-events-none rounded-lg z-10" />
       <div className="absolute inset-6 border border-gold-accent/5 pointer-events-none rounded-lg z-10" />
