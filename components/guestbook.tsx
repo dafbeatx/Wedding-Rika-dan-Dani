@@ -217,7 +217,7 @@ export default function Guestbook({ initialGuestName = '' }: GuestbookProps) {
   return (
     <div className="w-full max-w-2xl mx-auto space-y-12">
       {/* 1. Form Section */}
-      <div className="glass-white p-6 md:p-8 rounded-2xl border border-gold-accent/20 shadow-xl space-y-6">
+      <div className="glass-white p-5 md:p-8 rounded-2xl border border-gold-accent/20 shadow-xl space-y-5 md:space-y-6">
         <div className="text-center space-y-2 relative z-10">
           <h3 className="font-serif text-2xl font-semibold text-navy-blue">Kirim Doa & RSVP</h3>
           <div className="relative w-36 h-5 mx-auto mix-blend-multiply opacity-90">
@@ -244,7 +244,7 @@ export default function Guestbook({ initialGuestName = '' }: GuestbookProps) {
                 value={nama}
                 onChange={(e) => setNama(e.target.value)}
                 placeholder="Masukkan nama Anda"
-                className="w-full pl-10 pr-4 py-2.5 rounded-lg border border-slate-200 focus:outline-none focus:ring-2 focus:ring-gold-accent/50 focus:border-gold-accent bg-white/70 text-slate-800 text-sm transition-all"
+                className="w-full pl-10 pr-4 py-3 rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-gold-accent/50 focus:border-gold-accent bg-white/70 text-slate-800 text-sm transition-all"
               />
             </div>
           </div>
@@ -253,63 +253,66 @@ export default function Guestbook({ initialGuestName = '' }: GuestbookProps) {
             <label htmlFor="select-attendance" className="block text-xs font-semibold text-navy-blue uppercase tracking-wider mb-1">
               Konfirmasi Kehadiran
             </label>
-            <div className="grid grid-cols-2 gap-2">
+            <div className="grid grid-cols-2 gap-3">
               {(['hadir', 'tidak_hadir'] as const).map((status) => (
                 <button
                   key={status}
                   type="button"
                   onClick={() => setKehadiran(status)}
-                  className={`py-2 px-3 rounded-lg border text-xs font-medium uppercase tracking-wider transition-all cursor-pointer ${
+                  className={`py-3 px-4 rounded-xl border text-sm font-semibold tracking-wide transition-all cursor-pointer ${
                     kehadiran === status
                       ? 'bg-navy-blue text-white border-navy-blue shadow-md'
                       : 'bg-white/50 border-slate-200 text-slate-600 hover:bg-slate-50'
                   }`}
                 >
-                  {status === 'hadir' ? 'Hadir' : 'Absen'}
+                  {status === 'hadir' ? '✅ Hadir' : '❌ Tidak Hadir'}
                 </button>
               ))}
             </div>
           </div>
 
           <div>
-            <div className="flex flex-wrap items-center justify-between gap-2 mb-1.5">
-              <label htmlFor="input-wish" className="block text-xs font-semibold text-navy-blue uppercase tracking-wider">
-                Ucapan & Doa Restu
-              </label>
-              <div className="flex items-center gap-1.5 text-xs">
-                <span className="text-slate-400">Gaya AI:</span>
+            <label htmlFor="input-wish" className="block text-xs font-semibold text-navy-blue uppercase tracking-wider mb-2">
+              Ucapan & Doa Restu
+            </label>
+
+            {/* AI Generator Controls — stacked on mobile */}
+            <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-2 mb-3 p-3 bg-slate-50/80 rounded-xl border border-slate-100">
+              <div className="flex items-center gap-2 flex-1">
+                <span className="text-xs text-slate-500 font-medium whitespace-nowrap">🤖 Gaya AI:</span>
                 <select
                   value={aiStyle}
                   onChange={(e) => setAiStyle(e.target.value)}
-                  className="px-2 py-0.5 rounded border border-slate-200 bg-white text-xs text-slate-600 focus:outline-none focus:ring-1 focus:ring-gold-accent"
+                  className="flex-1 px-3 py-2 rounded-lg border border-slate-200 bg-white text-sm text-slate-600 focus:outline-none focus:ring-1 focus:ring-gold-accent"
                 >
                   <option value="islami">✨ Islami</option>
                   <option value="romantis">❤️ Romantis</option>
                   <option value="puitis">✍️ Puitis</option>
                   <option value="kasual">💬 Kasual</option>
                 </select>
-                <button
-                  type="button"
-                  onClick={generateAIWish}
-                  disabled={isGenerating || !nama.trim()}
-                  className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded bg-gold-accent hover:bg-gold-hover text-navy-dark font-semibold text-xs transition-colors shadow-sm disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer"
-                  title={!nama.trim() ? 'Masukkan nama terlebih dahulu' : 'Buat ucapan otomatis dengan AI'}
-                >
-                  {isGenerating ? (
-                    <>
-                      <Loader2 className="w-3 h-3 animate-spin" />
-                      <span>Membuat...</span>
-                    </>
-                  ) : (
-                    <>
-                      <span>🤖 Tulis otomatis</span>
-                    </>
-                  )}
-                </button>
               </div>
+              <button
+                type="button"
+                onClick={generateAIWish}
+                disabled={isGenerating || !nama.trim()}
+                className="flex items-center justify-center gap-2 px-4 py-2.5 rounded-lg bg-gold-accent hover:bg-gold-hover text-navy-dark font-bold text-sm transition-colors shadow-sm disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer whitespace-nowrap"
+                title={!nama.trim() ? 'Masukkan nama terlebih dahulu' : 'Buat ucapan otomatis dengan AI'}
+              >
+                {isGenerating ? (
+                  <>
+                    <Loader2 className="w-4 h-4 animate-spin" />
+                    <span>Membuat...</span>
+                  </>
+                ) : (
+                  <>
+                    <span>✨ Tulis Otomatis</span>
+                  </>
+                )}
+              </button>
             </div>
+
             <div className="relative">
-              <span className="absolute top-3 left-3 text-slate-400 pointer-events-none">
+              <span className="absolute top-3.5 left-3 text-slate-400 pointer-events-none">
                 <MessageSquare className="w-4 h-4" />
               </span>
               <textarea
@@ -318,8 +321,8 @@ export default function Guestbook({ initialGuestName = '' }: GuestbookProps) {
                 rows={4}
                 value={ucapan}
                 onChange={(e) => setUcapan(e.target.value)}
-                placeholder={!nama.trim() ? "Masukkan nama Anda terlebih dahulu untuk mengaktifkan generator AI..." : "Tulis ucapan selamat & doa restu secara manual, atau pilih gaya di atas lalu klik 'Tulis otomatis'..."}
-                className="w-full pl-10 pr-4 py-2.5 rounded-lg border border-slate-200 focus:outline-none focus:ring-2 focus:ring-gold-accent/50 focus:border-gold-accent bg-white/70 text-slate-800 text-sm transition-all resize-none"
+                placeholder={!nama.trim() ? "Masukkan nama Anda terlebih dahulu untuk mengaktifkan generator AI..." : "Tulis ucapan & doa restu secara manual, atau klik 'Tulis Otomatis' di atas..."}
+                className="w-full pl-10 pr-4 py-3 rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-gold-accent/50 focus:border-gold-accent bg-white/70 text-slate-800 text-sm transition-all resize-none"
               />
             </div>
           </div>
@@ -327,7 +330,7 @@ export default function Guestbook({ initialGuestName = '' }: GuestbookProps) {
           <button
             type="submit"
             disabled={isSubmitting}
-            className="w-full flex items-center justify-center gap-2 py-3 bg-gradient-to-r from-navy-blue to-navy-dark hover:from-navy-dark hover:to-navy-blue text-white rounded-lg font-medium text-sm transition-all duration-300 shadow-md hover:scale-[1.01] active:scale-[0.99] disabled:opacity-70 disabled:cursor-not-allowed cursor-pointer"
+            className="w-full flex items-center justify-center gap-2 py-3.5 bg-gradient-to-r from-navy-blue to-navy-dark hover:from-navy-dark hover:to-navy-blue text-white rounded-xl font-semibold text-sm transition-all duration-300 shadow-md hover:scale-[1.01] active:scale-[0.99] disabled:opacity-70 disabled:cursor-not-allowed cursor-pointer"
           >
             {isSubmitting ? (
               <>
@@ -337,7 +340,7 @@ export default function Guestbook({ initialGuestName = '' }: GuestbookProps) {
             ) : (
               <>
                 <Send className="w-4 h-4" />
-                <span>Kirim Ucapan & RSVP (WhatsApp)</span>
+                <span>Kirim Ucapan & RSVP</span>
               </>
             )}
           </button>
