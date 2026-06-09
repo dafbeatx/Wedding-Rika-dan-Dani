@@ -23,6 +23,7 @@ export default function Guestbook({ initialGuestName = '' }: GuestbookProps) {
   const [nama, setNama] = useState(initialGuestName);
   const [ucapan, setUcapan] = useState('');
   const [kehadiran, setKehadiran] = useState<'hadir' | 'tidak_hadir'>('hadir');
+  const [sendMode, setSendMode] = useState<'direct' | 'whatsapp'>('direct');
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
   const [loadingWishes, setLoadingWishes] = useState(true);
@@ -170,17 +171,19 @@ export default function Guestbook({ initialGuestName = '' }: GuestbookProps) {
         colors: ['#d4af37', '#1e3a5f', '#4a90d9']
       });
 
-      // WhatsApp Redirect helper (opens in new tab)
-      const waNumber = '6285776252404'; // RSVP admin
-      const statusKehadiran = kehadiran === 'hadir' ? 'HADIR' : 'TIDAK HADIR';
-      const text = `Halo Dani & Rika,\nSaya ingin mengonfirmasi kehadiran di acara pernikahan kalian.\n\n*Nama:* ${nama.trim()}\n*Status Kehadiran:* ${statusKehadiran}\n*Ucapan:* ${ucapan.trim()}\n\nTerima kasih!`;
-      
-      const waUrl = `https://api.whatsapp.com/send?phone=${waNumber}&text=${encodeURIComponent(text)}`;
-      
-      // Open WA in a brief delay to let user see success state
-      setTimeout(() => {
-        window.open(waUrl, '_blank');
-      }, 1500);
+      if (sendMode === 'whatsapp') {
+        // WhatsApp Redirect helper (opens in new tab)
+        const waNumber = '6285776252404'; // RSVP admin
+        const statusKehadiran = kehadiran === 'hadir' ? 'HADIR' : 'TIDAK HADIR';
+        const text = `Halo Dani & Rika,\nSaya ingin mengonfirmasi kehadiran di acara pernikahan kalian.\n\n*Nama:* ${nama.trim()}\n*Status Kehadiran:* ${statusKehadiran}\n*Ucapan:* ${ucapan.trim()}\n\nTerima kasih!`;
+        
+        const waUrl = `https://api.whatsapp.com/send?phone=${waNumber}&text=${encodeURIComponent(text)}`;
+        
+        // Open WA in a brief delay to let user see success state
+        setTimeout(() => {
+          window.open(waUrl, '_blank');
+        }, 1500);
+      }
 
       // Hide success notification after 5 seconds
       setTimeout(() => {
@@ -327,6 +330,45 @@ export default function Guestbook({ initialGuestName = '' }: GuestbookProps) {
             </div>
           </div>
 
+          {/* Metode Pengiriman */}
+          <div className="space-y-2">
+            <span className="block text-xs font-semibold text-navy-blue uppercase tracking-wider">
+              Metode Pengiriman
+            </span>
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+              <button
+                type="button"
+                onClick={() => setSendMode('direct')}
+                className={`flex flex-col items-center justify-center p-3 rounded-xl border text-center transition-all cursor-pointer ${
+                  sendMode === 'direct'
+                    ? 'bg-navy-blue/5 border-navy-blue text-navy-blue ring-1 ring-navy-blue shadow-sm'
+                    : 'bg-white/50 border-slate-200 text-slate-500 hover:bg-slate-50'
+                }`}
+              >
+                <span className="text-xs font-bold flex items-center gap-1.5 justify-center">
+                  💾 Kirim Instan
+                  <span className="text-[8px] bg-emerald-100 text-emerald-800 font-bold px-1.5 py-0.5 rounded-full uppercase tracking-wider">
+                    Rekomendasi
+                  </span>
+                </span>
+                <span className="text-[10px] mt-0.5 opacity-85">Cepat & Tanpa keluar aplikasi</span>
+              </button>
+
+              <button
+                type="button"
+                onClick={() => setSendMode('whatsapp')}
+                className={`flex flex-col items-center justify-center p-3 rounded-xl border text-center transition-all cursor-pointer ${
+                  sendMode === 'whatsapp'
+                    ? 'bg-navy-blue/5 border-navy-blue text-navy-blue ring-1 ring-navy-blue shadow-sm'
+                    : 'bg-white/50 border-slate-200 text-slate-500 hover:bg-slate-50'
+                }`}
+              >
+                <span className="text-xs font-bold">💬 Kirim + WhatsApp</span>
+                <span className="text-[10px] mt-0.5 opacity-85">Simpan & kirim chat personal</span>
+              </button>
+            </div>
+          </div>
+
           <button
             type="submit"
             disabled={isSubmitting}
@@ -349,7 +391,11 @@ export default function Guestbook({ initialGuestName = '' }: GuestbookProps) {
         {isSuccess && (
           <div className="flex items-center gap-2 p-3 bg-emerald-50 border border-emerald-200 text-emerald-800 rounded-lg animate-fade-in text-xs font-medium relative z-10">
             <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0" />
-            <span>Ucapan berhasil dikirim! Membuka konfirmasi WhatsApp...</span>
+            <span>
+              {sendMode === 'whatsapp'
+                ? 'Ucapan berhasil dikirim! Membuka konfirmasi WhatsApp...'
+                : 'Ucapan & RSVP berhasil dikirim langsung ke database mempelai! ✨'}
+            </span>
           </div>
         )}
       </div>
