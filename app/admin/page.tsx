@@ -25,6 +25,53 @@ export default function AdminPage() {
   const [origin, setOrigin] = useState('');
   const [dbError, setDbError] = useState(false);
 
+  // Tab State
+  const [activeTab, setActiveTab] = useState<'db' | 'instant'>('db');
+
+  // Instant Link Generator states
+  const [instantNama, setInstantNama] = useState('');
+  const [instantTemplate, setInstantTemplate] = useState<'formal' | 'casual'>('formal');
+  const [instantCopied, setInstantCopied] = useState(false);
+
+  const getInstantLink = () => {
+    const slug = generateSlug(instantNama || 'Tamu Undangan');
+    return `${origin}/invitation/${slug}`;
+  };
+
+  const getInstantMessage = () => {
+    const inviteLink = getInstantLink();
+    const guestName = instantNama.trim() || '[Nama Tamu]';
+    
+    if (instantTemplate === 'formal') {
+      return `Kepada Yth. Bapak/Ibu/Saudara/i *${guestName}*\n\nTanpa mengurangi rasa hormat, perkenankan kami mengundang Anda untuk hadir di acara pernikahan kami, Dani & Rika.\n\nBerikut link undangan digital Anda:\n${inviteLink}\n\nMerupakan suatu kehormatan dan kebahagiaan bagi kami apabila Anda berkenan hadir dan memberikan doa restu.\n\nTerima kasih.`;
+    } else {
+      return `Halo *${guestName}*,\n\nDi hari yang berbahagia ini, kami ingin mengundang kamu untuk hadir di acara pernikahan kami, Dani & Rika.\n\nDetail dan link undangan digital dapat diakses di:\n${inviteLink}\n\nKehadiran dan doa restu kamu sangat berarti bagi kami. Terima kasih ya!`;
+    }
+  };
+
+  const handleCopyInstant = async () => {
+    const text = getInstantMessage();
+    try {
+      await navigator.clipboard.writeText(text);
+      setInstantCopied(true);
+      setTimeout(() => setInstantCopied(false), 2000);
+    } catch (err) {
+      console.error('Gagal menyalin teks:', err);
+    }
+  };
+
+  const handleShareInstantWA = () => {
+    const text = getInstantMessage();
+    const waUrl = `https://api.whatsapp.com/send?text=${encodeURIComponent(text)}`;
+    window.open(waUrl, '_blank');
+  };
+
+  const handleShareInstantTelegram = () => {
+    const text = getInstantMessage();
+    const telegramUrl = `https://t.me/share/url?url=${encodeURIComponent(getInstantLink())}&text=${encodeURIComponent(text.replace(getInstantLink(), ''))}`;
+    window.open(telegramUrl, '_blank');
+  };
+
   // Set window origin
   useEffect(() => {
     if (typeof window !== 'undefined') {
@@ -206,62 +253,180 @@ export default function AdminPage() {
 
         <div className="grid md:grid-cols-3 gap-8">
           
-          {/* Left: Input Form */}
+          {/* Left: Input Form & Instant Link Generator */}
           <div className="md:col-span-1 space-y-6">
             <div className="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm space-y-4">
-              <h2 className="text-base font-bold text-navy-blue border-b border-slate-100 pb-2">Tambah Undangan Baru</h2>
-              
-              <form onSubmit={handleSubmit} className="space-y-4">
-                <div>
-                  <label htmlFor="guest-name" className="block text-xs font-bold text-slate-500 uppercase tracking-wider mb-1">
-                    Nama Tamu
-                  </label>
-                  <input
-                    id="guest-name"
-                    type="text"
-                    required
-                    value={nama}
-                    onChange={(e) => setNama(e.target.value)}
-                    placeholder="Contoh: Ahmad Rizki & Keluarga"
-                    className="w-full px-3 py-2 rounded-lg border border-slate-200 focus:outline-none focus:ring-2 focus:ring-gold-accent/50 focus:border-gold-accent text-sm"
-                  />
-                </div>
-
-                <div>
-                  <label htmlFor="guest-category" className="block text-xs font-bold text-slate-500 uppercase tracking-wider mb-1">
-                    Kategori Tamu
-                  </label>
-                  <select
-                    id="guest-category"
-                    value={kategori}
-                    onChange={(e) => setKategori(e.target.value)}
-                    className="w-full px-3 py-2 rounded-lg border border-slate-200 focus:outline-none focus:ring-2 focus:ring-gold-accent/50 focus:border-gold-accent text-sm bg-white"
-                  >
-                    <option value="Umum">Umum</option>
-                    <option value="VIP">VIP</option>
-                    <option value="Keluarga">Keluarga</option>
-                    <option value="Teman">Teman</option>
-                  </select>
-                </div>
-
+              {/* Tab Selector */}
+              <div className="flex border-b border-slate-100 pb-2">
                 <button
-                  type="submit"
-                  disabled={isSubmitting}
-                  className="w-full flex items-center justify-center gap-1.5 py-2.5 bg-navy-blue hover:bg-navy-dark text-white rounded-lg font-medium text-xs uppercase tracking-wider transition-all duration-300 shadow cursor-pointer disabled:opacity-75"
+                  type="button"
+                  onClick={() => setActiveTab('db')}
+                  className={`flex-1 py-1.5 text-xs font-bold uppercase tracking-wider text-center border-b-2 transition-all cursor-pointer ${
+                    activeTab === 'db'
+                      ? 'border-navy-blue text-navy-blue font-semibold'
+                      : 'border-transparent text-slate-400 hover:text-slate-600'
+                  }`}
                 >
-                  {isSubmitting ? (
-                    <>
-                      <Loader2 className="w-3.5 h-3.5 animate-spin" />
-                      <span>Memproses...</span>
-                    </>
-                  ) : (
-                    <>
-                      <Plus className="w-3.5 h-3.5" />
-                      <span>Buat Link Undangan</span>
-                    </>
-                  )}
+                  Simpan DB
                 </button>
-              </form>
+                <button
+                  type="button"
+                  onClick={() => setActiveTab('instant')}
+                  className={`flex-1 py-1.5 text-xs font-bold uppercase tracking-wider text-center border-b-2 transition-all cursor-pointer ${
+                    activeTab === 'instant'
+                      ? 'border-navy-blue text-navy-blue font-semibold'
+                      : 'border-transparent text-slate-400 hover:text-slate-600'
+                  }`}
+                >
+                  Link Instan
+                </button>
+              </div>
+
+              {activeTab === 'db' ? (
+                <form onSubmit={handleSubmit} className="space-y-4">
+                  <div>
+                    <label htmlFor="guest-name" className="block text-xs font-bold text-slate-500 uppercase tracking-wider mb-1">
+                      Nama Tamu
+                    </label>
+                    <input
+                      id="guest-name"
+                      type="text"
+                      required
+                      value={nama}
+                      onChange={(e) => setNama(e.target.value)}
+                      placeholder="Contoh: Ahmad Rizki & Keluarga"
+                      className="w-full px-3 py-2 rounded-lg border border-slate-200 focus:outline-none focus:ring-2 focus:ring-gold-accent/50 focus:border-gold-accent text-sm"
+                    />
+                  </div>
+
+                  <div>
+                    <label htmlFor="guest-category" className="block text-xs font-bold text-slate-500 uppercase tracking-wider mb-1">
+                      Kategori Tamu
+                    </label>
+                    <select
+                      id="guest-category"
+                      value={kategori}
+                      onChange={(e) => setKategori(e.target.value)}
+                      className="w-full px-3 py-2 rounded-lg border border-slate-200 focus:outline-none focus:ring-2 focus:ring-gold-accent/50 focus:border-gold-accent text-sm bg-white"
+                    >
+                      <option value="Umum">Umum</option>
+                      <option value="VIP">VIP</option>
+                      <option value="Keluarga">Keluarga</option>
+                      <option value="Teman">Teman</option>
+                    </select>
+                  </div>
+
+                  <button
+                    type="submit"
+                    disabled={isSubmitting}
+                    className="w-full flex items-center justify-center gap-1.5 py-2.5 bg-navy-blue hover:bg-navy-dark text-white rounded-lg font-medium text-xs uppercase tracking-wider transition-all duration-300 shadow cursor-pointer disabled:opacity-75"
+                  >
+                    {isSubmitting ? (
+                      <>
+                        <Loader2 className="w-3.5 h-3.5 animate-spin" />
+                        <span>Memproses...</span>
+                      </>
+                    ) : (
+                      <>
+                        <Plus className="w-3.5 h-3.5" />
+                        <span>Buat Link Undangan</span>
+                      </>
+                    )}
+                  </button>
+                </form>
+              ) : (
+                <div className="space-y-4">
+                  <div>
+                    <label htmlFor="instant-name" className="block text-xs font-bold text-slate-500 uppercase tracking-wider mb-1">
+                      Nama Tamu (Instan)
+                    </label>
+                    <input
+                      id="instant-name"
+                      type="text"
+                      value={instantNama}
+                      onChange={(e) => setInstantNama(e.target.value)}
+                      placeholder="Masukkan nama tamu..."
+                      className="w-full px-3 py-2 rounded-lg border border-slate-200 focus:outline-none focus:ring-2 focus:ring-gold-accent/50 focus:border-gold-accent text-sm"
+                    />
+                  </div>
+
+                  <div>
+                    <label htmlFor="instant-template" className="block text-xs font-bold text-slate-500 uppercase tracking-wider mb-1">
+                      Gaya Bahasa
+                    </label>
+                    <select
+                      id="instant-template"
+                      value={instantTemplate}
+                      onChange={(e) => setInstantTemplate(e.target.value as 'formal' | 'casual')}
+                      className="w-full px-3 py-2 rounded-lg border border-slate-200 focus:outline-none focus:ring-2 focus:ring-gold-accent/50 focus:border-gold-accent text-sm bg-white"
+                    >
+                      <option value="formal">Formal & Sopan</option>
+                      <option value="casual">Kasual & Teman</option>
+                    </select>
+                  </div>
+
+                  {/* Message Preview Box */}
+                  <div className="space-y-1">
+                    <span className="block text-[10px] font-bold text-slate-400 uppercase tracking-wider">
+                      Pratinjau Pesan WA
+                    </span>
+                    <div className="w-full p-3 bg-slate-50 border border-slate-100 rounded-lg text-slate-600 text-[11px] leading-relaxed max-h-40 overflow-y-auto font-mono whitespace-pre-wrap select-all">
+                      {getInstantMessage()}
+                    </div>
+                  </div>
+
+                  {/* Share / Action Buttons */}
+                  <div className="space-y-2 pt-2">
+                    {/* WhatsApp Button */}
+                    <button
+                      type="button"
+                      onClick={handleShareInstantWA}
+                      disabled={!instantNama.trim()}
+                      className="w-full flex items-center justify-center gap-2 py-2 bg-emerald-500 hover:bg-emerald-600 text-white rounded-lg text-xs font-bold uppercase tracking-wider transition-colors shadow disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer"
+                    >
+                      <Share2 className="w-3.5 h-3.5" />
+                      <span>Kirim WhatsApp</span>
+                    </button>
+
+                    <div className="grid grid-cols-2 gap-2">
+                      {/* Copy Text Button */}
+                      <button
+                        type="button"
+                        onClick={handleCopyInstant}
+                        disabled={!instantNama.trim()}
+                        className={`flex items-center justify-center gap-1.5 py-2 rounded-lg text-[10px] font-bold uppercase tracking-wider border transition-all cursor-pointer ${
+                          instantCopied
+                            ? 'bg-emerald-50 text-emerald-700 border-emerald-300'
+                            : 'bg-white hover:bg-slate-50 text-slate-600 border-slate-200'
+                        }`}
+                      >
+                        {instantCopied ? (
+                          <>
+                            <Check className="w-3.5 h-3.5" />
+                            <span>Tersalin</span>
+                          </>
+                        ) : (
+                          <>
+                            <Copy className="w-3.5 h-3.5" />
+                            <span>Salin Teks</span>
+                          </>
+                        )}
+                      </button>
+
+                      {/* Telegram Button */}
+                      <button
+                        type="button"
+                        onClick={handleShareInstantTelegram}
+                        disabled={!instantNama.trim()}
+                        className="flex items-center justify-center gap-1.5 py-2 bg-sky-500 hover:bg-sky-600 text-white rounded-lg text-[10px] font-bold uppercase tracking-wider transition-colors shadow disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer"
+                      >
+                        <ExternalLink className="w-3.5 h-3.5" />
+                        <span>Telegram</span>
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              )}
             </div>
           </div>
 
