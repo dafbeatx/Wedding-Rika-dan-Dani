@@ -77,13 +77,21 @@ export default function AdminPage() {
   const handleShareInstantWA = () => {
     const text = getInstantMessage();
     const waUrl = `https://api.whatsapp.com/send?text=${encodeURIComponent(text)}`;
-    window.open(waUrl, '_blank');
+    if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
+      window.location.href = waUrl;
+    } else {
+      window.open(waUrl, '_blank');
+    }
   };
 
   const handleShareInstantTelegram = () => {
     const text = getInstantMessage();
     const telegramUrl = `https://t.me/share/url?url=${encodeURIComponent(getInstantLink())}&text=${encodeURIComponent(text.replace(getInstantLink(), ''))}`;
-    window.open(telegramUrl, '_blank');
+    if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
+      window.location.href = telegramUrl;
+    } else {
+      window.open(telegramUrl, '_blank');
+    }
   };
 
   // Set window origin
@@ -326,7 +334,11 @@ export default function AdminPage() {
     const text = `✨ *Undangan Pernikahan* ✨\n\nKepada Yth.\nBapak/Ibu/Saudara/i *${guest.nama}*\n\nAssalamu'alaikum Wr. Wb.\n\nTanpa mengurangi rasa hormat, perkenankan kami mengundang Bapak/Ibu/Saudara/i untuk hadir di acara pernikahan kami:\n\n💍 *Dani Ramdani & Rika Rahmawati*\n📅 Minggu, 14 Juni 2026\n📍 Kp. Tapos RT.02 RW.08, Desa Pasarean, Kec. Pamijahan, Kab. Bogor\n\n🔗 Buka Undangan Digital:\n${inviteLink}\n\nMerupakan suatu kehormatan dan kebahagiaan bagi kami apabila Bapak/Ibu/Saudara/i berkenan hadir dan memberikan doa restu. 🙏\n\nWassalamu'alaikum Wr. Wb.\n\n_Hormat kami,_\n*Dani & Rika* 💕`;
     
     const waUrl = `https://api.whatsapp.com/send?text=${encodeURIComponent(text)}`;
-    window.open(waUrl, '_blank');
+    if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
+      window.location.href = waUrl;
+    } else {
+      window.open(waUrl, '_blank');
+    }
   };
 
   const filteredGuests = guests.filter(
@@ -667,7 +679,6 @@ export default function AdminPage() {
                                       <span>{guest.nama}</span>
                                       <a 
                                         href={`/invitation/${guest.slug}`} 
-                                        target="_blank" 
                                         rel="noopener noreferrer"
                                         className="text-slate-400 hover:text-gold-accent"
                                         title="Pratinjau Layer 1"
@@ -752,7 +763,6 @@ export default function AdminPage() {
                                   <span>{guest.nama}</span>
                                   <a 
                                     href={`/invitation/${guest.slug}`} 
-                                    target="_blank" 
                                     rel="noopener noreferrer"
                                     className="text-slate-400 hover:text-gold-accent"
                                     title="Pratinjau Layer 1"

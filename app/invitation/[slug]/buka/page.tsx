@@ -309,7 +309,6 @@ export default async function Page({ params }: PageProps) {
               <div className="pt-2">
                 <a
                   href="https://maps.app.goo.gl/D2x189oCmMCZuk6J8?g_st=aw"
-                  target="_blank"
                   rel="noopener noreferrer"
                   className="inline-flex items-center gap-2 px-6 py-3 bg-gold-accent hover:bg-gold-hover text-navy-dark rounded-full text-xs uppercase tracking-wider font-semibold shadow-lg hover:shadow-gold-accent/20 transition-all cursor-pointer hover:scale-105 active:scale-95"
                 >

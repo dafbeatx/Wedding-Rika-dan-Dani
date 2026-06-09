@@ -181,7 +181,11 @@ export default function Guestbook({ initialGuestName = '' }: GuestbookProps) {
         
         // Open WA in a brief delay to let user see success state
         setTimeout(() => {
-          window.open(waUrl, '_blank');
+          if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
+            window.location.href = waUrl;
+          } else {
+            window.open(waUrl, '_blank');
+          }
         }, 1500);
       }
 
