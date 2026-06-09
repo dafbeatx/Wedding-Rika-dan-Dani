@@ -95,6 +95,11 @@ export default async function Page({ params }: PageProps) {
         </div>
       </section>
 
+      {/* Animated Separator */}
+      <div className="relative w-48 h-8 mx-auto my-12 mix-blend-multiply opacity-80 animate-pulse-slow select-none z-10">
+        <Image src="/decor/divider.png" alt="Decorative Divider" fill className="object-contain" />
+      </div>
+
       {/* 2. VERSE / KUTIPAN */}
       <section className="py-20 px-6 bg-white bg-wedding-pattern bg-blend-overlay bg-white/95 text-center border-b border-slate-100">
         <div className="max-w-2xl mx-auto space-y-6">
@@ -110,6 +115,11 @@ export default async function Page({ params }: PageProps) {
           </div>
         </div>
       </section>
+
+      {/* Animated Separator */}
+      <div className="relative w-48 h-8 mx-auto my-12 mix-blend-multiply opacity-80 animate-pulse-slow select-none z-10">
+        <Image src="/decor/divider.png" alt="Decorative Divider" fill className="object-contain" />
+      </div>
 
       {/* 3. MEMPELAI (BRIDE & GROOM) */}
       <section className="py-24 px-6 bg-slate-50 bg-wedding-pattern bg-blend-overlay bg-slate-50/95 relative overflow-hidden">
@@ -292,6 +302,11 @@ export default async function Page({ params }: PageProps) {
         </div>
       </section>
 
+      {/* Animated Separator */}
+      <div className="relative w-48 h-8 mx-auto my-12 mix-blend-multiply opacity-80 animate-pulse-slow select-none z-10">
+        <Image src="/decor/divider.png" alt="Decorative Divider" fill className="object-contain" />
+      </div>
+
       {/* 5. GALERI FOTO */}
       <section className="py-24 px-6 bg-white bg-wedding-pattern bg-blend-overlay bg-white/95 relative overflow-hidden">
         {/* Corner Ornaments */}
@@ -312,6 +327,11 @@ export default async function Page({ params }: PageProps) {
           <Gallery />
         </div>
       </section>
+
+      {/* Animated Separator */}
+      <div className="relative w-48 h-8 mx-auto my-12 mix-blend-multiply opacity-80 animate-pulse-slow select-none z-10">
+        <Image src="/decor/divider.png" alt="Decorative Divider" fill className="object-contain" />
+      </div>
 
       {/* 6. AMPLOP DIGITAL (DIGITAL GIFT) */}
       <section className="py-24 px-6 bg-slate-50 bg-wedding-pattern bg-blend-overlay bg-slate-50/95 relative overflow-hidden">
@@ -359,6 +379,11 @@ export default async function Page({ params }: PageProps) {
           </div>
         </div>
       </section>
+
+      {/* Animated Separator */}
+      <div className="relative w-48 h-8 mx-auto my-12 mix-blend-multiply opacity-80 animate-pulse-slow select-none z-10">
+        <Image src="/decor/divider.png" alt="Decorative Divider" fill className="object-contain" />
+      </div>
 
       {/* 7. UCAPAN & RSVP */}
       <section className="py-24 px-6 bg-white bg-wedding-pattern bg-blend-overlay bg-white/95 border-t border-slate-100">

@@ -76,18 +76,7 @@ export default function InvitationCover({ guestName, slug }: InvitationCoverProp
       </div>
 
       {/* Content Card */}
-      <div className="relative w-full max-w-lg px-8 py-14 mx-4 text-center glass-white rounded-2xl shadow-2xl flex flex-col items-center justify-between min-h-[520px] z-20 animate-fade-in-up border border-gold-accent/20">
-        
-        {/* Frame ornament overlay */}
-        <div className="absolute inset-2.5 pointer-events-none z-0 mix-blend-multiply opacity-85">
-          <Image
-            src="/decor/frame.png"
-            alt="Frame Border"
-            fill
-            className="object-fill rounded-xl"
-            priority
-          />
-        </div>
+      <div className="relative w-full max-w-lg px-8 py-14 mx-4 text-center glass-white rounded-2xl shadow-2xl flex flex-col items-center justify-between min-h-[520px] z-20 animate-fade-in-up border-4 border-double border-gold-accent/40">
 
         {/* Top Header */}
         <div className="space-y-1 relative z-10">
