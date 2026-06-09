@@ -44,7 +44,7 @@ export default async function Page({ params }: PageProps) {
   }
 
   return (
-    <main className="relative bg-slate-50 min-h-screen text-slate-800 selection:bg-gold-accent/30 pb-20 md:pb-0">
+    <main className="relative bg-slate-50 min-h-screen text-slate-800 selection:bg-gold-accent/30">
       {/* Floating Audio Player */}
       <AudioPlayer />
 
@@ -396,7 +396,7 @@ export default async function Page({ params }: PageProps) {
       </section>
 
       {/* 8. FOOTER */}
-      <footer className="bg-navy-dark text-white py-16 px-6 text-center border-t border-gold-accent/10 relative">
+      <footer className="bg-navy-dark text-white pt-16 pb-32 md:pb-16 px-6 text-center border-t border-gold-accent/10 relative">
         <div className="max-w-2xl mx-auto space-y-6 relative z-10">
           <p className="font-serif text-base text-slate-300 leading-relaxed italic">
             "Merupakan suatu kehormatan dan kebahagiaan bagi kami apabila Bapak/Ibu/Saudara/i berkenan hadir untuk memberikan doa restu kepada kedua mempelai."
@@ -411,7 +411,7 @@ export default async function Page({ params }: PageProps) {
           </p>
 
           <p className="text-[10px] text-slate-500 pt-8 uppercase tracking-widest font-sans">
-            Created with ❤️ for Dani & Rika Wedding • 2026
+            Created by Dafa Maulana (Dafbeatx)
           </p>
         </div>
       </footer>
