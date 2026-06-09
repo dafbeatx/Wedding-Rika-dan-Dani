@@ -38,7 +38,7 @@ export default function AdminPage() {
 
   const getInstantLink = () => {
     const slug = generateSlug(instantNama || 'Tamu Undangan');
-    return `${shareOrigin}/invitation/${slug}`;
+    return `${shareOrigin}/i/${slug}`;
   };
 
   const getInstantMessage = () => {
@@ -46,9 +46,9 @@ export default function AdminPage() {
     const guestName = instantNama.trim() || '[Nama Tamu]';
     
     if (instantTemplate === 'formal') {
-      return `Kepada Yth. Bapak/Ibu/Saudara/i *${guestName}*\n\nTanpa mengurangi rasa hormat, perkenankan kami mengundang Anda untuk hadir di acara pernikahan kami, Dani & Rika.\n\nBerikut link undangan digital Anda:\n${inviteLink}\n\nMerupakan suatu kehormatan dan kebahagiaan bagi kami apabila Anda berkenan hadir dan memberikan doa restu.\n\nTerima kasih.`;
+      return `✨ *Undangan Pernikahan* ✨\n\nKepada Yth.\nBapak/Ibu/Saudara/i *${guestName}*\n\nAssalamu'alaikum Wr. Wb.\n\nTanpa mengurangi rasa hormat, perkenankan kami mengundang Bapak/Ibu/Saudara/i untuk hadir di acara pernikahan kami:\n\n💍 *Dani Ramdani & Rika Rahmawati*\n📅 Sabtu, 14 Juni 2026\n📍 Kp. Cikoneng Hilir 01/04, Sukamaju, Sumedang\n\n🔗 Buka Undangan Digital:\n${inviteLink}\n\nMerupakan suatu kehormatan dan kebahagiaan bagi kami apabila Bapak/Ibu/Saudara/i berkenan hadir dan memberikan doa restu. 🙏\n\nWassalamu'alaikum Wr. Wb.\n\n_Hormat kami,_\n*Dani & Rika* 💕`;
     } else {
-      return `Halo *${guestName}*,\n\nDi hari yang berbahagia ini, kami ingin mengundang kamu untuk hadir di acara pernikahan kami, Dani & Rika.\n\nDetail dan link undangan digital dapat diakses di:\n${inviteLink}\n\nKehadiran dan doa restu kamu sangat berarti bagi kami. Terima kasih ya!`;
+      return `💌 *Hai ${guestName}!* 💌\n\nKamu spesial buat kami! 🥰\n\nKami, *Dani & Rika*, ingin mengundang kamu untuk hadir di hari bahagia kami! 🎉\n\n💍 Pernikahan Dani & Rika\n📅 Sabtu, 14 Juni 2026\n📍 Kp. Cikoneng Hilir 01/04, Sukamaju, Sumedang\n\n🔗 Yuk buka undangan digitalnya:\n${inviteLink}\n\nKehadiran dan doa restumu sangat berarti bagi kami! 🙏✨\n\nSampai ketemu ya! 👋\n*Dani & Rika* 💕`;
     }
   };
 
@@ -211,7 +211,7 @@ export default function AdminPage() {
   };
 
   const handleCopyLink = async (guest: Guest) => {
-    const inviteLink = `${shareOrigin}/invitation/${guest.slug}`;
+    const inviteLink = `${shareOrigin}/i/${guest.slug}`;
     try {
       await navigator.clipboard.writeText(inviteLink);
       setCopiedId(guest.id);
@@ -222,8 +222,8 @@ export default function AdminPage() {
   };
 
   const handleSendWA = (guest: Guest) => {
-    const inviteLink = `${shareOrigin}/invitation/${guest.slug}`;
-    const text = `Kepada Yth. Bapak/Ibu/Saudara/i *${guest.nama}*\n\nTanpa mengurangi rasa hormat, perkenankan kami mengundang Anda untuk hadir di acara pernikahan kami, Dani & Rika.\n\nBerikut link undangan digital Anda:\n${inviteLink}\n\nMerupakan suatu kehormatan dan kebahagiaan bagi kami apabila Anda berkenan hadir dan memberikan doa restu.\n\nTerima kasih.`;
+    const inviteLink = `${shareOrigin}/i/${guest.slug}`;
+    const text = `✨ *Undangan Pernikahan* ✨\n\nKepada Yth.\nBapak/Ibu/Saudara/i *${guest.nama}*\n\nAssalamu'alaikum Wr. Wb.\n\nTanpa mengurangi rasa hormat, perkenankan kami mengundang Bapak/Ibu/Saudara/i untuk hadir di acara pernikahan kami:\n\n💍 *Dani Ramdani & Rika Rahmawati*\n📅 Sabtu, 14 Juni 2026\n📍 Kp. Cikoneng Hilir 01/04, Sukamaju, Sumedang\n\n🔗 Buka Undangan Digital:\n${inviteLink}\n\nMerupakan suatu kehormatan dan kebahagiaan bagi kami apabila Bapak/Ibu/Saudara/i berkenan hadir dan memberikan doa restu. 🙏\n\nWassalamu'alaikum Wr. Wb.\n\n_Hormat kami,_\n*Dani & Rika* 💕`;
     
     const waUrl = `https://api.whatsapp.com/send?text=${encodeURIComponent(text)}`;
     window.open(waUrl, '_blank');
