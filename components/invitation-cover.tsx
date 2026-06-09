@@ -2,7 +2,8 @@
 
 import React, { useState } from 'react';
 import { useRouter } from 'next/navigation';
-import { MailOpen, Calendar } from 'lucide-react';
+import { MailOpen } from 'lucide-react';
+import Image from 'next/image';
 import confetti from 'canvas-confetti';
 
 interface InvitationCoverProps {
@@ -63,7 +64,7 @@ export default function InvitationCover({ guestName, slug }: InvitationCoverProp
       }}
     >
       {/* Animated Glowing Gold Border and Accent Elements */}
-      <div className="absolute inset-4 border border-gold-accent/20 pointer-events-none rounded-lg z-10" />
+      <div className="absolute inset-4 border border-gold-accent/25 pointer-events-none rounded-lg z-10" />
       <div className="absolute inset-6 border border-gold-accent/10 pointer-events-none rounded-lg z-10 animate-pulse-slow" />
 
       {/* Floating Sparkles in the background */}
@@ -75,50 +76,77 @@ export default function InvitationCover({ guestName, slug }: InvitationCoverProp
       </div>
 
       {/* Content Card */}
-      <div className="relative w-full max-w-lg px-6 py-12 mx-4 text-center glass-navy rounded-2xl shadow-2xl border border-gold-accent/30 flex flex-col items-center justify-between min-h-[500px] z-20 animate-fade-in-up">
+      <div className="relative w-full max-w-lg px-8 py-14 mx-4 text-center glass-white rounded-2xl shadow-2xl flex flex-col items-center justify-between min-h-[520px] z-20 animate-fade-in-up border border-gold-accent/20">
+        
+        {/* Frame ornament overlay */}
+        <div className="absolute inset-2.5 pointer-events-none z-0 mix-blend-multiply opacity-85">
+          <Image
+            src="/decor/frame.png"
+            alt="Frame Border"
+            fill
+            className="object-fill rounded-xl"
+            priority
+          />
+        </div>
+
         {/* Top Header */}
-        <div className="space-y-2">
-          <p className="text-xs uppercase tracking-[0.25em] text-gold-accent font-semibold">
+        <div className="space-y-1 relative z-10">
+          <p className="text-[10px] uppercase tracking-[0.3em] text-gold-accent font-bold">
             Walimatul 'Ursy
           </p>
-          <div className="w-12 h-[1px] bg-gradient-to-r from-transparent via-gold-accent to-transparent mx-auto" />
+          <div className="relative w-28 h-5 mx-auto mix-blend-multiply">
+            <Image
+              src="/decor/divider.png"
+              alt="Divider"
+              fill
+              className="object-contain"
+              priority
+            />
+          </div>
         </div>
 
         {/* Main Names */}
-        <div className="my-6 space-y-4">
-          <h1 className="font-serif text-5xl md:text-6xl font-light text-gradient-gold tracking-wide">
+        <div className="my-3 space-y-2 relative z-10">
+          <h1 className="font-serif text-5xl md:text-6xl font-light text-navy-blue tracking-wide">
             Dani & Rika
           </h1>
-          <p className="font-sans text-sm tracking-[0.15em] text-slate-300">
+          <p className="font-sans text-xs tracking-[0.2em] text-gold-accent font-bold">
             AHAD, 14 JUNI 2026
           </p>
         </div>
 
         {/* Guest Greeting Section */}
-        <div className="w-full max-w-sm px-4 py-6 rounded-xl bg-navy-dark/60 border border-gold-accent/15 space-y-3">
-          <p className="text-xs text-slate-400 uppercase tracking-widest">
+        <div className="w-full max-w-sm px-6 py-5 rounded-xl bg-slate-50/90 border border-gold-accent/15 space-y-2.5 relative z-10 shadow-sm">
+          <p className="text-[10px] text-slate-500 uppercase tracking-widest font-semibold">
             Kepada Yth. Bapak/Ibu/Saudara/i
           </p>
-          <h2 className="font-serif text-xl md:text-2xl font-medium text-slate-100 px-2 line-clamp-2">
+          <h2 className="font-serif text-xl md:text-2xl font-bold text-navy-blue px-2 line-clamp-2">
             {guestName}
           </h2>
-          <div className="w-8 h-[1px] bg-gold-accent/30 mx-auto" />
-          <p className="text-[11px] text-slate-400 italic">
+          <div className="relative w-24 h-4 mx-auto mix-blend-multiply">
+            <Image
+              src="/decor/divider.png"
+              alt="Divider"
+              fill
+              className="object-contain"
+            />
+          </div>
+          <p className="text-[10px] text-slate-400 italic">
             *Tanpa Mengurangi Rasa Hormat, Kami Mengundang Anda untuk Hadir di Hari Bahagia Kami.
           </p>
         </div>
 
         {/* Action Button */}
-        <div className="mt-8">
+        <div className="mt-8 relative z-10">
           <button
             id="btn-open-invitation"
             onClick={handleOpenInvitation}
-            className="group relative flex items-center gap-2 px-8 py-3.5 bg-gradient-to-r from-gold-accent to-gold-hover hover:from-gold-hover hover:to-gold-accent text-navy-dark font-medium rounded-full shadow-lg hover:shadow-gold-accent/20 transition-all duration-300 hover:scale-105 active:scale-95 cursor-pointer font-sans text-sm uppercase tracking-wider overflow-hidden"
+            className="group relative flex items-center gap-2 px-8 py-3.5 bg-gradient-to-r from-navy-blue to-navy-dark hover:from-navy-dark hover:to-navy-blue text-white font-medium rounded-full shadow-lg hover:shadow-navy-blue/20 transition-all duration-300 hover:scale-105 active:scale-95 cursor-pointer font-sans text-sm uppercase tracking-wider overflow-hidden"
           >
             {/* Pulsing ring overlay */}
-            <span className="absolute inset-0 rounded-full border border-gold-accent animate-ping opacity-75 group-hover:hidden" />
+            <span className="absolute inset-0 rounded-full border border-navy-blue animate-ping opacity-75 group-hover:hidden" />
             
-            <MailOpen className="w-4 h-4 transition-transform group-hover:rotate-12" />
+            <MailOpen className="w-4 h-4 transition-transform group-hover:rotate-12 text-gold-accent" />
             <span>Buka Undangan</span>
           </button>
         </div>

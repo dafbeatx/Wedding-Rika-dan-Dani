@@ -3,6 +3,7 @@
 import React, { useEffect, useState } from 'react';
 import { supabase } from '@/lib/supabase/client';
 import { Send, CheckCircle2, User, MessageSquare, Users, Loader2 } from 'lucide-react';
+import Image from 'next/image';
 import confetti from 'canvas-confetti';
 
 interface Ucapan {
@@ -190,7 +191,10 @@ export default function Guestbook({ initialGuestName = '' }: GuestbookProps) {
       <div className="glass-white p-6 md:p-8 rounded-2xl border border-gold-accent/20 shadow-xl space-y-6">
         <div className="text-center space-y-2">
           <h3 className="font-serif text-2xl font-semibold text-navy-blue">Kirim Doa & RSVP</h3>
-          <p className="text-sm text-slate-500 max-w-md mx-auto">
+          <div className="relative w-36 h-5 mx-auto mix-blend-multiply opacity-90">
+            <Image src="/decor/divider.png" alt="Divider" fill className="object-contain" />
+          </div>
+          <p className="text-sm text-slate-500 max-w-md mx-auto mt-2">
             Berikan doa restu Anda kepada kedua mempelai dan konfirmasikan kehadiran Anda.
           </p>
         </div>

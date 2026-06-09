@@ -96,7 +96,7 @@ export default async function Page({ params }: PageProps) {
       </section>
 
       {/* 2. VERSE / KUTIPAN */}
-      <section className="py-20 px-6 bg-white text-center border-b border-slate-100">
+      <section className="py-20 px-6 bg-white bg-wedding-pattern bg-blend-overlay bg-white/95 text-center border-b border-slate-100">
         <div className="max-w-2xl mx-auto space-y-6">
           <Heart className="w-8 h-8 text-gold-accent mx-auto animate-pulse-slow" />
           <p className="font-serif text-base italic leading-relaxed text-slate-600">
@@ -109,7 +109,7 @@ export default async function Page({ params }: PageProps) {
       </section>
 
       {/* 3. MEMPELAI (BRIDE & GROOM) */}
-      <section className="py-24 px-6 bg-slate-50 relative overflow-hidden">
+      <section className="py-24 px-6 bg-slate-50 bg-wedding-pattern bg-blend-overlay bg-slate-50/95 relative overflow-hidden">
         {/* Subtle Background Elements */}
         <div className="absolute -top-24 -left-24 w-96 h-96 rounded-full bg-gold-accent/5 filter blur-3xl" />
         <div className="absolute -bottom-24 -right-24 w-96 h-96 rounded-full bg-navy-blue/5 filter blur-3xl" />
@@ -117,7 +117,10 @@ export default async function Page({ params }: PageProps) {
         <div className="max-w-4xl mx-auto space-y-16">
           <div className="text-center space-y-3">
             <h2 className="font-serif text-3xl md:text-4xl font-semibold text-navy-blue">Kedua Mempelai</h2>
-            <p className="text-sm text-slate-500 max-w-md mx-auto">
+            <div className="relative w-40 h-6 mx-auto mix-blend-multiply opacity-90">
+              <Image src="/decor/divider.png" alt="Divider" fill className="object-contain" />
+            </div>
+            <p className="text-sm text-slate-500 max-w-md mx-auto mt-2">
               Maha Suci Allah yang telah mempertautkan dua hati dalam ikatan suci pernikahan.
             </p>
           </div>
@@ -283,11 +286,14 @@ export default async function Page({ params }: PageProps) {
       </section>
 
       {/* 5. GALERI FOTO */}
-      <section className="py-24 px-6 bg-white">
+      <section className="py-24 px-6 bg-white bg-wedding-pattern bg-blend-overlay bg-white/95">
         <div className="max-w-4xl mx-auto space-y-12">
           <div className="text-center space-y-3">
             <h2 className="font-serif text-3xl md:text-4xl font-semibold text-navy-blue">Galeri Bahagia</h2>
-            <p className="text-sm text-slate-500 max-w-md mx-auto">
+            <div className="relative w-40 h-6 mx-auto mix-blend-multiply opacity-90">
+              <Image src="/decor/divider.png" alt="Divider" fill className="object-contain" />
+            </div>
+            <p className="text-sm text-slate-500 max-w-md mx-auto mt-2">
               Ukiran momen kebersamaan yang kami abadikan menuju gerbang mahligai rumah tangga.
             </p>
           </div>
@@ -297,11 +303,14 @@ export default async function Page({ params }: PageProps) {
       </section>
 
       {/* 6. AMPLOP DIGITAL (DIGITAL GIFT) */}
-      <section className="py-24 px-6 bg-slate-50 relative">
+      <section className="py-24 px-6 bg-slate-50 bg-wedding-pattern bg-blend-overlay bg-slate-50/95 relative">
         <div className="max-w-xl mx-auto space-y-12">
           <div className="text-center space-y-3">
             <h2 className="font-serif text-3xl md:text-4xl font-semibold text-navy-blue">Amplop Digital</h2>
-            <p className="text-sm text-slate-500 max-w-md mx-auto">
+            <div className="relative w-40 h-6 mx-auto mix-blend-multiply opacity-90">
+              <Image src="/decor/divider.png" alt="Divider" fill className="object-contain" />
+            </div>
+            <p className="text-sm text-slate-500 max-w-md mx-auto mt-2">
               Bagi Anda yang ingin memberikan tanda kasih atau ucapan secara digital, dapat ditujukan melalui rekening di bawah ini:
             </p>
           </div>
@@ -337,7 +346,7 @@ export default async function Page({ params }: PageProps) {
       </section>
 
       {/* 7. UCAPAN & RSVP */}
-      <section className="py-24 px-6 bg-white border-t border-slate-100">
+      <section className="py-24 px-6 bg-white bg-wedding-pattern bg-blend-overlay bg-white/95 border-t border-slate-100">
         <Guestbook initialGuestName={guestName} />
       </section>
 

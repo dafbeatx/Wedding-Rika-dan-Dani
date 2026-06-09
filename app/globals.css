@@ -91,3 +91,9 @@ body {
   -ms-overflow-style: none;
   scrollbar-width: none;
 }
+
+.bg-wedding-pattern {
+  background-image: url('/decor/pattern.png');
+  background-repeat: repeat;
+  background-size: 300px;
+}
