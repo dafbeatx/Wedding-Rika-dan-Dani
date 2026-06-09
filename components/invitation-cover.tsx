@@ -99,7 +99,7 @@ export default function InvitationCover({ guestName, slug }: InvitationCoverProp
       variants={backdropVariants}
       className="fixed inset-0 z-50 flex items-center justify-center overflow-hidden"
       style={{
-        backgroundImage: `linear-gradient(to bottom, rgba(15, 30, 95, 0.45) 0%, rgba(10, 19, 36, 0.75) 100%), url('/gallery/gallery1.jpg')`,
+        backgroundImage: `linear-gradient(to bottom, rgba(15, 30, 95, 0.45) 0%, rgba(10, 19, 36, 0.75) 100%), url('/gallery/gallery4.jpg')`,
         backgroundSize: 'cover',
         backgroundPosition: 'center',
       }}

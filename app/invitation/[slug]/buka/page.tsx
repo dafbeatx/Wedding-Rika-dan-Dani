@@ -56,7 +56,7 @@ export default async function Page({ params }: PageProps) {
         id="hero"
         className="relative h-screen flex flex-col items-center justify-center text-center px-4 overflow-hidden"
         style={{
-          backgroundImage: `linear-gradient(to bottom, rgba(10, 19, 36, 0.6), rgba(10, 19, 36, 0.85)), url('/gallery/gallery1.jpg')`,
+          backgroundImage: `linear-gradient(to bottom, rgba(10, 19, 36, 0.6), rgba(10, 19, 36, 0.85)), url('/gallery/gallery4.jpg')`,
           backgroundSize: 'cover',
           backgroundPosition: 'center',
           backgroundAttachment: 'fixed',
