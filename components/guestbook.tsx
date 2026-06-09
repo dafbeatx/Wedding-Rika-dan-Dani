@@ -188,8 +188,19 @@ export default function Guestbook({ initialGuestName = '' }: GuestbookProps) {
   return (
     <div className="w-full max-w-2xl mx-auto space-y-12">
       {/* 1. Form Section */}
-      <div className="glass-white p-6 md:p-8 rounded-2xl border border-gold-accent/20 shadow-xl space-y-6">
-        <div className="text-center space-y-2">
+      <div className="glass-white p-6 md:p-8 rounded-2xl border border-gold-accent/20 shadow-xl space-y-6 relative overflow-hidden">
+        {/* Frame ornament overlay */}
+        <div className="absolute inset-2.5 pointer-events-none z-0 mix-blend-multiply opacity-80">
+          <Image
+            src="/decor/frame.png"
+            alt="Frame Border"
+            fill
+            className="object-fill rounded-xl"
+            priority
+          />
+        </div>
+
+        <div className="text-center space-y-2 relative z-10">
           <h3 className="font-serif text-2xl font-semibold text-navy-blue">Kirim Doa & RSVP</h3>
           <div className="relative w-36 h-5 mx-auto mix-blend-multiply opacity-90">
             <Image src="/decor/divider.png" alt="Divider" fill className="object-contain" />
@@ -199,7 +210,7 @@ export default function Guestbook({ initialGuestName = '' }: GuestbookProps) {
           </p>
         </div>
 
-        <form onSubmit={handleSubmit} className="space-y-4">
+        <form onSubmit={handleSubmit} className="space-y-4 relative z-10">
           <div>
             <label htmlFor="input-name" className="block text-xs font-semibold text-navy-blue uppercase tracking-wider mb-1">
               Nama Lengkap
@@ -282,7 +293,7 @@ export default function Guestbook({ initialGuestName = '' }: GuestbookProps) {
         </form>
 
         {isSuccess && (
-          <div className="flex items-center gap-2 p-3 bg-emerald-50 border border-emerald-200 text-emerald-800 rounded-lg animate-fade-in text-xs font-medium">
+          <div className="flex items-center gap-2 p-3 bg-emerald-50 border border-emerald-200 text-emerald-800 rounded-lg animate-fade-in text-xs font-medium relative z-10">
             <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0" />
             <span>Ucapan berhasil dikirim! Membuka konfirmasi WhatsApp...</span>
           </div>

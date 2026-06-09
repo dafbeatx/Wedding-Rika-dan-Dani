@@ -105,11 +105,18 @@ export default async function Page({ params }: PageProps) {
           <p className="text-xs font-semibold uppercase tracking-widest text-navy-blue">
             QS. Ar-Rum: 21
           </p>
+          <div className="relative w-16 h-16 mx-auto mix-blend-multiply opacity-75 mt-2">
+            <Image src="/decor/accent.png" alt="Floral Accent" fill className="object-contain" />
+          </div>
         </div>
       </section>
 
       {/* 3. MEMPELAI (BRIDE & GROOM) */}
       <section className="py-24 px-6 bg-slate-50 bg-wedding-pattern bg-blend-overlay bg-slate-50/95 relative overflow-hidden">
+        {/* Corner Ornaments */}
+        <div className="absolute inset-0 pointer-events-none z-0 mix-blend-multiply opacity-25 select-none">
+          <Image src="/decor/corner.png" alt="Corner Ornament" fill className="object-cover" />
+        </div>
         {/* Subtle Background Elements */}
         <div className="absolute -top-24 -left-24 w-96 h-96 rounded-full bg-gold-accent/5 filter blur-3xl" />
         <div className="absolute -bottom-24 -right-24 w-96 h-96 rounded-full bg-navy-blue/5 filter blur-3xl" />
@@ -286,8 +293,12 @@ export default async function Page({ params }: PageProps) {
       </section>
 
       {/* 5. GALERI FOTO */}
-      <section className="py-24 px-6 bg-white bg-wedding-pattern bg-blend-overlay bg-white/95">
-        <div className="max-w-4xl mx-auto space-y-12">
+      <section className="py-24 px-6 bg-white bg-wedding-pattern bg-blend-overlay bg-white/95 relative overflow-hidden">
+        {/* Corner Ornaments */}
+        <div className="absolute inset-0 pointer-events-none z-0 mix-blend-multiply opacity-25 select-none">
+          <Image src="/decor/corner.png" alt="Corner Ornament" fill className="object-cover" />
+        </div>
+        <div className="max-w-4xl mx-auto space-y-12 relative z-10">
           <div className="text-center space-y-3">
             <h2 className="font-serif text-3xl md:text-4xl font-semibold text-navy-blue">Galeri Bahagia</h2>
             <div className="relative w-40 h-6 mx-auto mix-blend-multiply opacity-90">
@@ -303,8 +314,12 @@ export default async function Page({ params }: PageProps) {
       </section>
 
       {/* 6. AMPLOP DIGITAL (DIGITAL GIFT) */}
-      <section className="py-24 px-6 bg-slate-50 bg-wedding-pattern bg-blend-overlay bg-slate-50/95 relative">
-        <div className="max-w-xl mx-auto space-y-12">
+      <section className="py-24 px-6 bg-slate-50 bg-wedding-pattern bg-blend-overlay bg-slate-50/95 relative overflow-hidden">
+        {/* Corner Ornaments */}
+        <div className="absolute inset-0 pointer-events-none z-0 mix-blend-multiply opacity-25 select-none">
+          <Image src="/decor/corner.png" alt="Corner Ornament" fill className="object-cover" />
+        </div>
+        <div className="max-w-xl mx-auto space-y-12 relative z-10">
           <div className="text-center space-y-3">
             <h2 className="font-serif text-3xl md:text-4xl font-semibold text-navy-blue">Amplop Digital</h2>
             <div className="relative w-40 h-6 mx-auto mix-blend-multiply opacity-90">
