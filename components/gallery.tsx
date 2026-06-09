@@ -25,10 +25,6 @@ const IMAGES = [
     src: '/gallery/gallery5.jpg',
     alt: 'Dani & Rika Prewedding 5',
   },
-  {
-    src: '/gallery/gallery6.jpg',
-    alt: 'Dani & Rika Prewedding 6',
-  },
 ];
 
 export default function Gallery() {
