@@ -152,7 +152,7 @@ export default async function Page({ params }: PageProps) {
             <div className="flex flex-col items-center text-center space-y-6 group">
               <div className="relative w-48 h-48 rounded-full overflow-hidden border-4 border-gold-accent shadow-xl transition-transform duration-500 group-hover:scale-105">
                 <Image
-                  src="/gallery/groom.jpg"
+                  src="/gallery/groom_v2.jpg"
                   alt="Dani Ramdani"
                   fill
                   sizes="192px"
@@ -176,7 +176,7 @@ export default async function Page({ params }: PageProps) {
             <div className="flex flex-col items-center text-center space-y-6 group">
               <div className="relative w-48 h-48 rounded-full overflow-hidden border-4 border-gold-accent shadow-xl transition-transform duration-500 group-hover:scale-105">
                 <Image
-                  src="/gallery/bride.jpg"
+                  src="/gallery/bride_v2.jpg"
                   alt="Rika Rahmawati"
                   fill
                   sizes="192px"
