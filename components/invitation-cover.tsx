@@ -4,6 +4,7 @@ import React, { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { MailOpen } from 'lucide-react';
 import confetti from 'canvas-confetti';
+import { motion } from 'framer-motion';
 
 interface InvitationCoverProps {
   guestName: string;
@@ -51,11 +52,52 @@ export default function InvitationCover({ guestName, slug }: InvitationCoverProp
     }, 1200);
   };
 
+  // Framer Motion Variants
+  const backdropVariants = {
+    hidden: { opacity: 0 },
+    visible: { 
+      opacity: 1, 
+      transition: { duration: 0.8 } 
+    }
+  };
+
+  const cardVariants = {
+    hidden: { 
+      opacity: 0, 
+      scale: 0.94,
+      y: 30
+    },
+    visible: { 
+      opacity: 1, 
+      scale: 1,
+      y: 0,
+      transition: {
+        duration: 0.8,
+        ease: [0.16, 1, 0.3, 1] as const, // easeOutQuint for luxury smooth feel
+        when: "beforeChildren",
+        staggerChildren: 0.12,
+      }
+    }
+  };
+
+  const itemVariants = {
+    hidden: { opacity: 0, y: 15 },
+    visible: { 
+      opacity: 1, 
+      y: 0,
+      transition: {
+        duration: 0.6,
+        ease: [0.16, 1, 0.3, 1] as const
+      }
+    }
+  };
+
   return (
-    <div 
-      className={`fixed inset-0 z-50 flex items-center justify-center overflow-hidden transition-all duration-1000 ease-in-out ${
-        isOpening ? 'opacity-0 scale-105 pointer-events-none' : 'opacity-100 scale-100'
-      }`}
+    <motion.div 
+      initial="hidden"
+      animate={isOpening ? { opacity: 0, scale: 1.05, transition: { duration: 1, ease: 'easeInOut' } } : "visible"}
+      variants={backdropVariants}
+      className="fixed inset-0 z-50 flex items-center justify-center overflow-hidden"
       style={{
         backgroundImage: `linear-gradient(to bottom, rgba(15, 30, 95, 0.45) 0%, rgba(10, 19, 36, 0.75) 100%), url('/gallery/gallery1.jpg')`,
         backgroundSize: 'cover',
@@ -64,7 +106,7 @@ export default function InvitationCover({ guestName, slug }: InvitationCoverProp
     >
       {/* Animated Glowing Gold Border and Accent Elements */}
       <div className="absolute inset-4 border border-gold-accent/20 pointer-events-none rounded-lg z-10" />
-      <div className="absolute inset-6 border border-gold-accent/5 pointer-events-none rounded-lg z-10 animate-pulse-slow" />
+      <div className="absolute inset-6 border border-gold-accent/5 pointer-events-none rounded-lg z-10" />
 
       {/* Floating Sparkles in the background */}
       <div className="absolute inset-0 pointer-events-none overflow-hidden opacity-30">
@@ -75,46 +117,65 @@ export default function InvitationCover({ guestName, slug }: InvitationCoverProp
       </div>
 
       {/* Content Card (Cream / Off-white, Gold Border, Soft Deep Shadow) */}
-      <div 
-        className="relative w-full max-w-lg mx-4 px-8 py-16 md:px-12 md:py-20 text-center bg-[#FAF7F2] rounded-[2rem] shadow-[0_25px_60px_rgba(10,19,36,0.25)] border border-gold-accent/40 flex flex-col items-center justify-between min-h-[550px] z-20 animate-fade-in-up"
+      <motion.div 
+        variants={cardVariants}
+        className="relative w-full max-w-lg mx-4 px-8 py-16 md:px-12 md:py-20 text-center bg-[#FAF7F2] rounded-3xl shadow-[0_25px_60px_rgba(10,19,36,0.25)] border border-gold-accent/40 flex flex-col items-center justify-between min-h-[560px] z-20 overflow-hidden"
       >
-        
+        {/* Subtle Wedding Pattern texture overlay on the card */}
+        <div className="absolute inset-0 bg-wedding-pattern opacity-[0.04] pointer-events-none" />
+
+        {/* Elegant Gold Corner Ornaments inside the card */}
+        <div className="absolute top-0 left-0 w-16 h-16 pointer-events-none opacity-40 bg-[url('/decor/corner.png')] bg-no-repeat bg-contain rotate-0" />
+        <div className="absolute top-0 right-0 w-16 h-16 pointer-events-none opacity-40 bg-[url('/decor/corner.png')] bg-no-repeat bg-contain scale-x-[-1]" />
+        <div className="absolute bottom-0 left-0 w-16 h-16 pointer-events-none opacity-40 bg-[url('/decor/corner.png')] bg-no-repeat bg-contain scale-y-[-1]" />
+        <div className="absolute bottom-0 right-0 w-16 h-16 pointer-events-none opacity-40 bg-[url('/decor/corner.png')] bg-no-repeat bg-contain scale-[-1]" />
+
         {/* Top Header Section (Walimatul 'Ursy with Diamond Ornament) */}
-        <div className="space-y-3 relative z-10">
-          <div className="flex items-center justify-center gap-1">
+        <motion.div variants={itemVariants} className="space-y-3 relative z-10">
+          <div className="flex items-center justify-center gap-1.5">
             <span className="text-gold-accent text-xs">✦</span>
-            <span className="text-gold-accent text-[8px] opacity-65">♦</span>
+            <span className="text-gold-accent text-[8px] opacity-70">♦</span>
             <span className="text-gold-accent text-xs">✦</span>
           </div>
-          <p className="text-[10px] md:text-xs uppercase tracking-[0.3em] text-gold-accent font-bold">
+          <p className="text-[11px] md:text-xs uppercase tracking-[0.35em] text-gold-accent font-bold">
             Walimatul 'Ursy
           </p>
           <div className="w-16 h-[0.5px] bg-gold-accent/30 mx-auto" />
-        </div>
+        </motion.div>
 
         {/* Main Names with Decorative Gold Lines */}
-        <div className="my-6 space-y-4 relative z-10 w-full">
-          <div className="w-20 h-[0.5px] bg-gradient-to-r from-transparent via-gold-accent to-transparent mx-auto" />
+        <motion.div variants={itemVariants} className="my-6 space-y-5 relative z-10 w-full">
+          {/* Top Gold Line Divider */}
+          <div className="flex items-center justify-center gap-3">
+            <div className="h-[1px] bg-gradient-to-r from-transparent via-gold-accent/50 to-transparent w-16" />
+            <span className="text-gold-accent text-[8px] opacity-60">♦</span>
+            <div className="h-[1px] bg-gradient-to-r from-transparent via-gold-accent/50 to-transparent w-16" />
+          </div>
           
-          <h1 className="font-serif text-5xl md:text-6xl font-light text-navy-dark tracking-wide py-2">
+          <h1 className="font-serif text-5xl md:text-6xl font-light text-navy-dark tracking-wide py-2 drop-shadow-[0_1px_1px_rgba(255,255,255,0.8)]">
             Dani & Rika
           </h1>
           
-          <div className="w-20 h-[0.5px] bg-gradient-to-r from-transparent via-gold-accent to-transparent mx-auto" />
+          {/* Bottom Gold Line Divider */}
+          <div className="flex items-center justify-center gap-3">
+            <div className="h-[1px] bg-gradient-to-r from-transparent via-gold-accent/50 to-transparent w-16" />
+            <span className="text-gold-accent text-[8px] opacity-60">♦</span>
+            <div className="h-[1px] bg-gradient-to-r from-transparent via-gold-accent/50 to-transparent w-16" />
+          </div>
           
           <p className="font-sans text-[10px] md:text-xs tracking-[0.25em] text-gold-accent font-bold uppercase mt-2">
             AHAD, 14 JUNI 2026
           </p>
-        </div>
+        </motion.div>
 
         {/* Guest Greeting Section (Prominent Guest Name) */}
-        <div className="w-full max-w-sm py-4 space-y-3 relative z-10">
+        <motion.div variants={itemVariants} className="w-full max-w-sm py-4 space-y-3 relative z-10">
           <p className="text-[10px] text-slate-400 uppercase tracking-[0.2em] font-semibold">
             Kepada Yth. Bapak/Ibu/Saudara/i
           </p>
           <div className="w-8 h-[0.5px] bg-gold-accent/30 mx-auto" />
           
-          <h2 className="font-serif text-2xl md:text-3xl font-medium text-navy-dark px-2 line-clamp-2 leading-relaxed">
+          <h2 className="font-serif text-2xl md:text-3xl font-medium text-navy-dark px-2 line-clamp-2 leading-relaxed drop-shadow-[0_1px_1px_rgba(255,255,255,0.8)]">
             {guestName}
           </h2>
           
@@ -122,10 +183,10 @@ export default function InvitationCover({ guestName, slug }: InvitationCoverProp
           <p className="text-[10px] text-slate-400 max-w-xs mx-auto leading-relaxed italic">
             *Tanpa Mengurangi Rasa Hormat, Kami Mengundang Anda untuk Hadir di Hari Bahagia Kami.
           </p>
-        </div>
+        </motion.div>
 
         {/* Action Button (Navy Blue, Gold Border, Pill shape) */}
-        <div className="mt-8 relative z-10">
+        <motion.div variants={itemVariants} className="mt-8 relative z-10">
           <button
             id="btn-open-invitation"
             onClick={handleOpenInvitation}
@@ -137,9 +198,10 @@ export default function InvitationCover({ guestName, slug }: InvitationCoverProp
             <MailOpen className="w-4 h-4 transition-transform group-hover:rotate-12 text-gold-accent" />
             <span>Buka Undangan</span>
           </button>
-        </div>
+        </motion.div>
 
-      </div>
-    </div>
+      </motion.div>
+    </motion.div>
   );
 }
+
