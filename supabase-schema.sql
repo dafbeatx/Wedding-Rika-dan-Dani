@@ -63,6 +63,11 @@ create policy "Allow public insert access to ucapan"
 on public.ucapan for insert 
 with check (true);
 
+create policy "Allow public delete access to ucapan" 
+on public.ucapan for delete 
+using (true);
+
+
 
 -- ---------------------------------------------------------
 -- 3. DUMMY DATA / SAMPLE GUESTS
