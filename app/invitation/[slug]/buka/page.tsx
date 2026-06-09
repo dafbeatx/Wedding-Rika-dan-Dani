@@ -160,7 +160,7 @@ export default async function Page({ params }: PageProps) {
                 />
               </div>
               <div className="space-y-2">
-                <h3 className="font-serif text-2xl font-bold text-navy-blue">Dani Ramdani, S.Kom</h3>
+                <h3 className="font-serif text-2xl font-bold text-navy-blue">Dani Ramdani</h3>
                 <p className="text-xs uppercase tracking-widest text-gold-accent font-bold">Dani</p>
                 <div className="w-8 h-[1px] bg-slate-300 mx-auto my-3" />
                 <p className="text-sm text-slate-600">
@@ -184,7 +184,7 @@ export default async function Page({ params }: PageProps) {
                 />
               </div>
               <div className="space-y-2">
-                <h3 className="font-serif text-2xl font-bold text-navy-blue">Rika Rahmawati, S.Pd</h3>
+                <h3 className="font-serif text-2xl font-bold text-navy-blue">Rika Rahmawati</h3>
                 <p className="text-xs uppercase tracking-widest text-gold-accent font-bold">Rika</p>
                 <div className="w-8 h-[1px] bg-slate-300 mx-auto my-3" />
                 <p className="text-sm text-slate-600">
