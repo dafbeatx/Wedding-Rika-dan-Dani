@@ -44,7 +44,7 @@ export default function AudioPlayer() {
       {/* Hidden Audio Element */}
       <audio
         ref={audioRef}
-        src="https://assets.mixkit.co/music/preview/mixkit-love-and-tenderness-194.mp3"
+        src="/marry-your-daughter.mp3"
         loop
         preload="auto"
       />
