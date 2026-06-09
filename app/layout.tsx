@@ -13,6 +13,10 @@ const outfit = Outfit({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL(
+    process.env.NEXT_PUBLIC_SITE_URL || 
+    (process.env.VERCEL_PROJECT_PRODUCTION_URL ? `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}` : 'https://wedding-rika-dan-dani.vercel.app')
+  ),
   title: "Undangan Pernikahan Dani & Rika",
   description: "Undangan Pernikahan Digital Dani Ramdani & Rika Rahmawati. Hari Minggu, 14 Juni 2026 di Desa Pasarean, Pamijahan, Bogor.",
   keywords: ["Dani & Rika", "Undangan Pernikahan", "Dani Ramdani", "Rika Rahmawati", "Undangan Digital"],
