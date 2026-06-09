@@ -1,0 +1,405 @@
+'use client';
+
+import React, { useState, useEffect } from 'react';
+import { supabase } from '@/lib/supabase/client';
+import { generateSlug } from '@/lib/utils';
+import { Plus, Copy, Share2, Search, Trash2, Check, ExternalLink, Loader2, AlertTriangle } from 'lucide-react';
+import confetti from 'canvas-confetti';
+
+interface Guest {
+  id: string;
+  slug: string;
+  nama: string;
+  kategori: string;
+  created_at: string;
+}
+
+export default function AdminPage() {
+  const [guests, setGuests] = useState<Guest[]>([]);
+  const [nama, setNama] = useState('');
+  const [kategori, setKategori] = useState('Umum');
+  const [searchQuery, setSearchQuery] = useState('');
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [loading, setLoading] = useState(true);
+  const [copiedId, setCopiedId] = useState<string | null>(null);
+  const [origin, setOrigin] = useState('');
+  const [dbError, setDbError] = useState(false);
+
+  // Set window origin
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      setOrigin(window.location.origin);
+    }
+  }, []);
+
+  // Fetch guests from Supabase or localStorage
+  useEffect(() => {
+    async function fetchGuests() {
+      try {
+        const { data, error } = await supabase
+          .from('guests')
+          .select('*')
+          .order('created_at', { ascending: false });
+
+        if (error) throw error;
+        if (data) {
+          setGuests(data as Guest[]);
+        }
+      } catch (error) {
+        console.warn('Gagal memuat tamu dari Supabase. Menggunakan fallback localStorage:', error);
+        setDbError(true);
+        // Load from localStorage as fallback
+        const local = localStorage.getItem('wedding_guests');
+        if (local) {
+          setGuests(JSON.parse(local));
+        } else {
+          // Add default dummy data
+          const dummyGuests: Guest[] = [
+            {
+              id: '1',
+              slug: 'ahmad-rizki-dan-keluarga',
+              nama: 'Ahmad Rizki & Keluarga',
+              kategori: 'VIP',
+              created_at: new Date().toISOString(),
+            },
+            {
+              id: '2',
+              slug: 'siti-sarah',
+              nama: 'Siti Sarah',
+              kategori: 'Teman',
+              created_at: new Date(Date.now() - 3600000).toISOString(),
+            }
+          ];
+          setGuests(dummyGuests);
+          localStorage.setItem('wedding_guests', JSON.stringify(dummyGuests));
+        }
+      } finally {
+        setLoading(false);
+      }
+    }
+
+    fetchGuests();
+  }, []);
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!nama.trim()) return;
+
+    setIsSubmitting(true);
+    const slug = generateSlug(nama.trim());
+    
+    // Check if slug already exists to prevent duplicate key
+    if (guests.some(g => g.slug === slug)) {
+      alert('Nama tamu ini sudah menghasilkan slug yang sama. Silakan bedakan sedikit namanya (contoh tambahkan nama belakang atau alias).');
+      setIsSubmitting(false);
+      return;
+    }
+
+    const newGuest = {
+      slug,
+      nama: nama.trim(),
+      kategori,
+    };
+
+    try {
+      if (dbError) throw new Error('Supabase unconfigured');
+
+      const { data, error } = await supabase
+        .from('guests')
+        .insert([newGuest])
+        .select();
+
+      if (error) throw error;
+
+      if (data && data.length > 0) {
+        setGuests((prev) => [data[0] as Guest, ...prev]);
+      }
+    } catch (error) {
+      console.warn('Gagal menyimpan ke database, menyimpan ke localStorage:', error);
+      
+      const localGuest: Guest = {
+        id: Math.random().toString(),
+        slug: newGuest.slug,
+        nama: newGuest.nama,
+        kategori: newGuest.kategori,
+        created_at: new Date().toISOString(),
+      };
+
+      const updatedGuests = [localGuest, ...guests];
+      setGuests(updatedGuests);
+      localStorage.setItem('wedding_guests', JSON.stringify(updatedGuests));
+    } finally {
+      setIsSubmitting(false);
+      setNama('');
+      confetti({
+        particleCount: 50,
+        spread: 60,
+        origin: { y: 0.8 }
+      });
+    }
+  };
+
+  const handleDelete = async (id: string, slug: string) => {
+    if (!confirm('Apakah Anda yakin ingin menghapus tamu ini?')) return;
+
+    try {
+      if (dbError) throw new Error('Supabase unconfigured');
+
+      const { error } = await supabase
+        .from('guests')
+        .delete()
+        .eq('id', id);
+
+      if (error) throw error;
+      setGuests((prev) => prev.filter((g) => g.id !== id));
+    } catch (error) {
+      console.warn('Gagal menghapus dari database, menghapus dari localStorage:', error);
+      const updatedGuests = guests.filter((g) => g.id !== id);
+      setGuests(updatedGuests);
+      localStorage.setItem('wedding_guests', JSON.stringify(updatedGuests));
+    }
+  };
+
+  const handleCopyLink = async (guest: Guest) => {
+    const inviteLink = `${origin}/invitation/${guest.slug}`;
+    try {
+      await navigator.clipboard.writeText(inviteLink);
+      setCopiedId(guest.id);
+      setTimeout(() => setCopiedId(null), 2000);
+    } catch (err) {
+      console.error('Gagal menyalin link:', err);
+    }
+  };
+
+  const handleSendWA = (guest: Guest) => {
+    const inviteLink = `${origin}/invitation/${guest.slug}`;
+    const text = `Kepada Yth. Bapak/Ibu/Saudara/i *${guest.nama}*\n\nTanpa mengurangi rasa hormat, perkenankan kami mengundang Anda untuk hadir di acara pernikahan kami, Dani & Rika.\n\nBerikut link undangan digital Anda:\n${inviteLink}\n\nMerupakan suatu kehormatan dan kebahagiaan bagi kami apabila Anda berkenan hadir dan memberikan doa restu.\n\nTerima kasih.`;
+    
+    const waUrl = `https://api.whatsapp.com/send?text=${encodeURIComponent(text)}`;
+    window.open(waUrl, '_blank');
+  };
+
+  const filteredGuests = guests.filter(
+    (g) =>
+      g.nama.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      g.kategori.toLowerCase().includes(searchQuery.toLowerCase())
+  );
+
+  return (
+    <main className="min-h-screen bg-slate-50 text-slate-800 p-6 font-sans">
+      <div className="max-w-5xl mx-auto space-y-8">
+        
+        {/* Header */}
+        <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-slate-200 pb-5">
+          <div>
+            <h1 className="font-serif text-3xl font-bold text-navy-blue">Wedding Link Generator</h1>
+            <p className="text-sm text-slate-500 mt-1">Dani Ramdani & Rika Rahmawati Wedding Invitation Admin Panel</p>
+          </div>
+          
+          {dbError && (
+            <div className="flex items-center gap-2 px-3 py-2 bg-amber-50 border border-amber-200 text-amber-800 rounded-lg text-xs font-medium max-w-sm">
+              <AlertTriangle className="w-4 h-4 text-amber-600 shrink-0" />
+              <span>Menggunakan **Local Storage** karena Supabase belum dikonfigurasi.</span>
+            </div>
+          )}
+        </div>
+
+        <div className="grid md:grid-cols-3 gap-8">
+          
+          {/* Left: Input Form */}
+          <div className="md:col-span-1 space-y-6">
+            <div className="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm space-y-4">
+              <h2 className="text-base font-bold text-navy-blue border-b border-slate-100 pb-2">Tambah Undangan Baru</h2>
+              
+              <form onSubmit={handleSubmit} className="space-y-4">
+                <div>
+                  <label htmlFor="guest-name" className="block text-xs font-bold text-slate-500 uppercase tracking-wider mb-1">
+                    Nama Tamu
+                  </label>
+                  <input
+                    id="guest-name"
+                    type="text"
+                    required
+                    value={nama}
+                    onChange={(e) => setNama(e.target.value)}
+                    placeholder="Contoh: Ahmad Rizki & Keluarga"
+                    className="w-full px-3 py-2 rounded-lg border border-slate-200 focus:outline-none focus:ring-2 focus:ring-gold-accent/50 focus:border-gold-accent text-sm"
+                  />
+                </div>
+
+                <div>
+                  <label htmlFor="guest-category" className="block text-xs font-bold text-slate-500 uppercase tracking-wider mb-1">
+                    Kategori Tamu
+                  </label>
+                  <select
+                    id="guest-category"
+                    value={kategori}
+                    onChange={(e) => setKategori(e.target.value)}
+                    className="w-full px-3 py-2 rounded-lg border border-slate-200 focus:outline-none focus:ring-2 focus:ring-gold-accent/50 focus:border-gold-accent text-sm bg-white"
+                  >
+                    <option value="Umum">Umum</option>
+                    <option value="VIP">VIP</option>
+                    <option value="Keluarga">Keluarga</option>
+                    <option value="Teman">Teman</option>
+                  </select>
+                </div>
+
+                <button
+                  type="submit"
+                  disabled={isSubmitting}
+                  className="w-full flex items-center justify-center gap-1.5 py-2.5 bg-navy-blue hover:bg-navy-dark text-white rounded-lg font-medium text-xs uppercase tracking-wider transition-all duration-300 shadow cursor-pointer disabled:opacity-75"
+                >
+                  {isSubmitting ? (
+                    <>
+                      <Loader2 className="w-3.5 h-3.5 animate-spin" />
+                      <span>Memproses...</span>
+                    </>
+                  ) : (
+                    <>
+                      <Plus className="w-3.5 h-3.5" />
+                      <span>Buat Link Undangan</span>
+                    </>
+                  )}
+                </button>
+              </form>
+            </div>
+          </div>
+
+          {/* Right: Guest List Table */}
+          <div className="md:col-span-2 space-y-4">
+            <div className="bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden">
+              
+              {/* Search Bar */}
+              <div className="p-4 border-b border-slate-100 flex items-center gap-3 bg-slate-50/50">
+                <div className="relative flex-1">
+                  <span className="absolute inset-y-0 left-0 pl-3 flex items-center text-slate-400 pointer-events-none">
+                    <Search className="w-4 h-4" />
+                  </span>
+                  <input
+                    type="text"
+                    value={searchQuery}
+                    onChange={(e) => setSearchQuery(e.target.value)}
+                    placeholder="Cari nama tamu atau kategori..."
+                    className="w-full pl-9 pr-4 py-1.5 rounded-lg border border-slate-200 focus:outline-none focus:ring-2 focus:ring-gold-accent/50 focus:border-gold-accent text-xs"
+                  />
+                </div>
+                <div className="text-xs font-semibold text-slate-500 shrink-0">
+                  Total Tamu: {filteredGuests.length}
+                </div>
+              </div>
+
+              {/* Table */}
+              {loading ? (
+                <div className="text-center py-16">
+                  <Loader2 className="w-6 h-6 animate-spin mx-auto text-gold-accent mb-2" />
+                  <span className="text-xs text-slate-400">Memuat daftar tamu...</span>
+                </div>
+              ) : filteredGuests.length === 0 ? (
+                <div className="text-center py-16 text-slate-400 italic text-sm">
+                  Belum ada tamu terdaftar. Silakan tambah tamu di form sebelah kiri.
+                </div>
+              ) : (
+                <div className="overflow-x-auto">
+                  <table className="w-full text-left border-collapse text-xs">
+                    <thead>
+                      <tr className="bg-slate-50 text-slate-500 uppercase tracking-wider border-b border-slate-100 font-semibold text-[10px]">
+                        <th className="py-3 px-4">Nama Tamu</th>
+                        <th className="py-3 px-4">Kategori</th>
+                        <th className="py-3 px-4">Slug</th>
+                        <th className="py-3 px-4 text-right">Aksi</th>
+                      </tr>
+                    </thead>
+                    <tbody className="divide-y divide-slate-100">
+                      {filteredGuests.map((guest) => {
+                        const guestLink = `${origin}/invitation/${guest.slug}`;
+                        return (
+                          <tr key={guest.id} className="hover:bg-slate-50/70 transition-colors">
+                            <td className="py-3.5 px-4 font-bold text-navy-blue">
+                              <div className="flex items-center gap-1.5">
+                                <span>{guest.nama}</span>
+                                <a 
+                                  href={`/invitation/${guest.slug}`} 
+                                  target="_blank" 
+                                  rel="noopener noreferrer"
+                                  className="text-slate-400 hover:text-gold-accent"
+                                  title="Pratinjau Layer 1"
+                                >
+                                  <ExternalLink className="w-3 h-3" />
+                                </a>
+                              </div>
+                            </td>
+                            <td className="py-3.5 px-4">
+                              <span className={`px-2 py-0.5 rounded-full text-[9px] font-bold ${
+                                guest.kategori === 'VIP' 
+                                  ? 'bg-purple-50 text-purple-700 border border-purple-100'
+                                  : guest.kategori === 'Keluarga'
+                                  ? 'bg-blue-50 text-blue-700 border border-blue-100'
+                                  : guest.kategori === 'Teman'
+                                  ? 'bg-emerald-50 text-emerald-700 border border-emerald-100'
+                                  : 'bg-slate-100 text-slate-600'
+                              }`}>
+                                {guest.kategori}
+                              </span>
+                            </td>
+                            <td className="py-3.5 px-4 font-mono text-slate-400 text-[10px]">
+                              {guest.slug}
+                            </td>
+                            <td className="py-3.5 px-4 text-right space-x-1 whitespace-nowrap">
+                              {/* Copy Button */}
+                              <button
+                                onClick={() => handleCopyLink(guest)}
+                                className={`inline-flex items-center gap-1 px-2.5 py-1 rounded border transition-all cursor-pointer ${
+                                  copiedId === guest.id
+                                    ? 'bg-emerald-50 text-emerald-700 border-emerald-300'
+                                    : 'bg-white hover:bg-slate-50 text-slate-600 border-slate-200'
+                                }`}
+                                title="Salin Link Undangan"
+                              >
+                                {copiedId === guest.id ? (
+                                  <>
+                                    <Check className="w-3 h-3" />
+                                    <span>Tersalin</span>
+                                  </>
+                                ) : (
+                                  <>
+                                    <Copy className="w-3 h-3" />
+                                    <span>Salin</span>
+                                  </>
+                                )}
+                              </button>
+
+                              {/* WhatsApp Share Button */}
+                              <button
+                                onClick={() => handleSendWA(guest)}
+                                className="inline-flex items-center gap-1 px-2.5 py-1 bg-emerald-500 hover:bg-emerald-600 text-white rounded border border-emerald-500 transition-all cursor-pointer"
+                                title="Kirim via WhatsApp"
+                              >
+                                <Share2 className="w-3 h-3" />
+                                <span>Kirim WA</span>
+                              </button>
+
+                              {/* Delete Button */}
+                              <button
+                                onClick={() => handleDelete(guest.id, guest.slug)}
+                                className="inline-flex items-center justify-center p-1 text-slate-400 hover:text-rose-600 hover:bg-rose-50 rounded transition-all cursor-pointer"
+                                title="Hapus Tamu"
+                              >
+                                <Trash2 className="w-3.5 h-3.5" />
+                              </button>
+                            </td>
+                          </tr>
+                        );
+                      })}
+                    </tbody>
+                  </table>
+                </div>
+              )}
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+    </main>
+  );
+}
