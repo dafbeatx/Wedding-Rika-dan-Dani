@@ -44,7 +44,7 @@ export default function AudioPlayer() {
       {/* Hidden Audio Element */}
       <audio
         ref={audioRef}
-        src="/marry-your-daughter.mp3"
+        src="/marry-your-daughter_v2.mp3"
         loop
         preload="auto"
       />
