@@ -25,6 +25,9 @@ export default function AdminPage() {
   const [origin, setOrigin] = useState('');
   const [dbError, setDbError] = useState(false);
 
+  // Use production URL for sharing (so WhatsApp can fetch OG thumbnails)
+  const shareOrigin = process.env.NEXT_PUBLIC_BASE_URL || origin;
+
   // Tab State
   const [activeTab, setActiveTab] = useState<'db' | 'instant'>('db');
 
@@ -35,7 +38,7 @@ export default function AdminPage() {
 
   const getInstantLink = () => {
     const slug = generateSlug(instantNama || 'Tamu Undangan');
-    return `${origin}/invitation/${slug}`;
+    return `${shareOrigin}/invitation/${slug}`;
   };
 
   const getInstantMessage = () => {
@@ -208,7 +211,7 @@ export default function AdminPage() {
   };
 
   const handleCopyLink = async (guest: Guest) => {
-    const inviteLink = `${origin}/invitation/${guest.slug}`;
+    const inviteLink = `${shareOrigin}/invitation/${guest.slug}`;
     try {
       await navigator.clipboard.writeText(inviteLink);
       setCopiedId(guest.id);
@@ -219,7 +222,7 @@ export default function AdminPage() {
   };
 
   const handleSendWA = (guest: Guest) => {
-    const inviteLink = `${origin}/invitation/${guest.slug}`;
+    const inviteLink = `${shareOrigin}/invitation/${guest.slug}`;
     const text = `Kepada Yth. Bapak/Ibu/Saudara/i *${guest.nama}*\n\nTanpa mengurangi rasa hormat, perkenankan kami mengundang Anda untuk hadir di acara pernikahan kami, Dani & Rika.\n\nBerikut link undangan digital Anda:\n${inviteLink}\n\nMerupakan suatu kehormatan dan kebahagiaan bagi kami apabila Anda berkenan hadir dan memberikan doa restu.\n\nTerima kasih.`;
     
     const waUrl = `https://api.whatsapp.com/send?text=${encodeURIComponent(text)}`;
