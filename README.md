@@ -11,7 +11,7 @@ Website undangan pernikahan digital untuk pasangan **Dani & Rika** yang modern, 
 3. **Realtime Guestbook**: Ucapan dan status konfirmasi kehadiran ter-update secara otomatis secara realtime tanpa reload halaman menggunakan Supabase Postgres replication.
 4. **Admin Panel** (`/admin`): Form generator untuk menambahkan nama tamu baru secara instan, menghasilkan slug yang bersih, menyalin link undangan, dan langsung mengirim via WhatsApp dengan teks undangan siap pakai.
 5. **Autoplay Music & Audio Control**: Background music romantis (instrumental piano) menyala otomatis begitu undangan dibuka, dilengkapi tombol putar/jeda melayang.
-6. **Amplop Digital (Digital Envelope)**: Salin nomor rekening Bank Mandiri (Dani) atau DANA (Rika) sekali klik dengan toast notifikasi instan.
+6. **Amplop Digital (Digital Envelope)**: Salin nomor rekening CIMB (Dani) atau DANA (Rika) sekali klik dengan toast notifikasi instan.
 
 ---
 

@@ -381,7 +381,7 @@ export default async function Page({ params }: PageProps) {
               <div className="glass-white p-6 rounded-2xl border border-gold-accent/20 shadow-md text-center space-y-4">
                 <p className="text-xs uppercase tracking-widest text-slate-400 font-bold">Transfer Bank (Dani)</p>
                 <div className="space-y-1">
-                  <p className="font-bold text-navy-blue text-lg">Bank Mandiri</p>
+                  <p className="font-bold text-navy-blue text-lg">CIMB</p>
                   <p className="font-mono text-xl tracking-wider text-slate-700">762799722200</p>
                   <p className="text-xs text-slate-500">a.n. Dani Ramdani</p>
                 </div>
